@@ -20,9 +20,7 @@ script/setup
 
 ### JavaScript
 
--   Lint: `npm run lint`
 -   Fix: `npm run lint:fix`
--   Test: `npm run test`
 
 ## Pre-commit Hooks
 
