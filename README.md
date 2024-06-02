@@ -143,8 +143,7 @@ Date expressions are described by this context-free grammar.
     | "weekly"
     | "monthly"
     | "quarterly"
-    | "yearly"
-    | "annually"
+    | "yearly" | "annually"
 
 <day_of_week> ::= "Monday" | "Mon"
     | "Tuesday" | "Tue"

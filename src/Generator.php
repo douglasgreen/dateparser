@@ -92,39 +92,6 @@ namespace DouglasGreen\DateParser;
 <time_unit> ::= "second" | "seconds"
     | "minute" | "minutes"
     | "hour" | "hours"
-
-<day_unit> ::= "day" | "days"
-    | "week" | "weeks"
-    | "month" | "months"
-    | "quarter" | "quarters"
-    | "year" | "years"
-
-<frequency> ::= "once"
-    | "twice"
-    | NUMBER "times"
-
-<optional_frequency> ::= <frequency> | ""
-
-<recurring_time_unit> ::= "secondly"
-    | "minutely"
-    | "hourly"
-
-<recurring_day_unit> ::= "daily"
-    | "weekly"
-    | "monthly"
-    | "quarterly"
-    | "yearly"
-    | "annually"
-
-<day_of_week> ::= "Monday" | "Mon"
-    | "Tuesday" | "Tue"
-    | "Wednesday" | "Wed"
-    | "Thursday" | "Thu"
-    | "Friday" | "Fri"
-    | "Saturday" | "Sat"
-    | "Sunday" | "Sun"
-    | "weekday"
-    | "weekend"
 */
 
 /**
@@ -218,6 +185,79 @@ class Generator
     }
 
     /**
+     * <day_of_week> ::= "Monday" | "Mon"
+     *     | "Tuesday" | "Tue"
+     *     | "Wednesday" | "Wed"
+     *     | "Thursday" | "Thu"
+     *     | "Friday" | "Fri"
+     *     | "Saturday" | "Sat"
+     *     | "Sunday" | "Sun"
+     *     | "weekday"
+     *     | "weekend"
+     */
+    public function genDayOfWeek(): string
+    {
+        $type = mt_rand(0, 15);
+        switch ($type) {
+            case 0: return 'Monday';
+            case 1: return 'Mon';
+            case 2: return 'Tuesday';
+            case 3: return 'Tue';
+            case 4: return 'Wednesday';
+            case 5: return 'Wed';
+            case 6: return 'Thursday';
+            case 7: return 'Thu';
+            case 8: return 'Friday';
+            case 9: return 'Fri';
+            case 10: return 'Saturday';
+            case 11: return 'Sat';
+            case 12: return 'Sunday';
+            case 13: return 'Sun';
+            case 14: return 'weekday';
+            case 15: return 'weekend';
+        }
+    }
+
+    /**
+     * <day_unit> ::= "day" | "days"
+     *     | "week" | "weeks"
+     *     | "month" | "months"
+     *     | "quarter" | "quarters"
+     *     | "year" | "years"
+     */
+    public function genDayUnit(): string
+    {
+        $type = mt_rand(0, 9);
+        switch ($type) {
+            case 0: return 'day';
+            case 1: return 'days';
+            case 2: return 'week';
+            case 3: return 'weeks';
+            case 4: return 'month';
+            case 5: return 'months';
+            case 6: return 'quarter';
+            case 7: return 'quarters';
+            case 8: return 'year';
+            case 9: return 'years';
+        }
+    }
+
+    /**
+     * <frequency> ::= "once"
+     *     | "twice"
+     *     | NUMBER "times"
+     */
+    public function genFrequency(): string
+    {
+        $type = mt_rand(0, 2);
+        switch ($type) {
+            case 0: return 'once';
+            case 1: return 'twice';
+            case 2: return $this->genNumber() . ' times';
+        }
+    }
+
+    /**
      * HOUR: Matches hour with AM/PM (e.g., 6pm).
      */
     public function genHour(): string
@@ -239,6 +279,18 @@ class Generator
     public function genNumber(): string
     {
         return (string) mt_rand(1, 99);
+    }
+
+    /**
+     * <optional_frequency> ::= <frequency> | ""
+     */
+    public function genOptionalFrequency(): string
+    {
+        $type = mt_rand(0, 1);
+        switch ($type) {
+            case 0: return $this->genFrequency();
+            case 1: return '""';
+        }
     }
 
     /**
@@ -394,6 +446,41 @@ class Generator
             case 12: return 'Octobers';
             case 13: return 'Novembers';
             case 14: return 'Decembers';
+        }
+    }
+
+    /**
+     * <recurring_day_unit> ::= "daily"
+     *     | "weekly"
+     *     | "monthly"
+     *     | "quarterly"
+     *     | "yearly" | "annually"
+     */
+    public function genRecurringDayUnit(): string
+    {
+        $type = mt_rand(0, 5);
+        switch ($type) {
+            case 0: return 'daily';
+            case 1: return 'weekly';
+            case 2: return 'monthly';
+            case 3: return 'quarterly';
+            case 4: return 'yearly';
+            case 5: return 'annually';
+        }
+    }
+
+    /**
+     * <recurring_time_unit> ::= "secondly"
+     *     | "minutely"
+     *     | "hourly"
+     */
+    public function genRecurringTimeUnit(): string
+    {
+        $type = mt_rand(0, 2);
+        switch ($type) {
+            case 0: return 'secondly';
+            case 1: return 'minutely';
+            case 2: return 'hourly';
         }
     }
 

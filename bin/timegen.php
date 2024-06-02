@@ -39,6 +39,14 @@ echo 'Before or after:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genBeforeOrAfter')) . PHP_EOL;
 echo PHP_EOL;
 
+echo 'Day of week:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genDayOfWeek')) . PHP_EOL;
+echo PHP_EOL;
+
+echo 'Day unit:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genDayUnit')) . PHP_EOL;
+echo PHP_EOL;
+
 echo 'Optional period part:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genOptionalPeriodPart')) . PHP_EOL;
 echo PHP_EOL;
@@ -59,11 +67,27 @@ echo 'Plural month:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genPluralMonth')) . PHP_EOL;
 echo PHP_EOL;
 
+echo 'Recurring day unit:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genRecurringDayUnit')) . PHP_EOL;
+echo PHP_EOL;
+
+echo 'Recurring time unit:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genRecurringTimeUnit')) . PHP_EOL;
+echo PHP_EOL;
+
 /**
  * Level 1 symbols
  */
 echo 'Clock time:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genClockTime')) . PHP_EOL;
+echo PHP_EOL;
+
+echo 'Frequency:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genFrequency')) . PHP_EOL;
+echo PHP_EOL;
+
+echo 'Optional frequency:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genOptionalFrequency')) . PHP_EOL;
 echo PHP_EOL;
 
 echo 'Repeater:' . PHP_EOL;
