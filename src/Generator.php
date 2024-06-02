@@ -6,18 +6,22 @@ namespace DouglasGreen\DateParser;
 
 use DouglasGreen\Exceptions\ValueException;
 
+/**
+ * @todo check rand range and case numbers
+ * @todo check that all functions and symbols are used
+ */
+
 /*
-<datetime_expression> ::= <datetime_phrase>
-    | <datetime>
-    | <simple_time>
-    | <time_phrase>
+<datetime_expression> ::= <datetime>
+    | <datetime_phrase>
     | <recurring_date>
     | <recurring_time>
+    | <relative_time_phrase>
+    | <simple_time>
+    | <time_phrase>
 
 <datetime_phrase> :== "on" <datetime>
     | "in" <day_unit_count> <optional_time>
-
-<datetime> ::= <simple_date> <optional_time>
 
 <recurring_time> ::= <optional_frequency> <recurring_time_unit>
     | <repeater> <time_of_day>
@@ -124,6 +128,14 @@ class Generator
         $parts = mt_rand(0, 1) === 0 ? [$year, $month, $day] : [$month, $day];
 
         return implode($sep, $parts);
+    }
+
+    /**
+     * <datetime> ::= <simple_date> <optional_time>
+     */
+    public function genDatetime(): string
+    {
+        return $this->genSimpleDate() . ' ' . $this->genOptionalTime();
     }
 
     /**
@@ -521,6 +533,19 @@ class Generator
     }
 
     /**
+     * <relative_time_phrase> ::= "in" ONE <time_unit>
+     *     | "in" TWO_OR_MORE <plural_time_unit>
+     */
+    public function genRelativeTimePhrase(): string
+    {
+        $type = mt_rand(0, 1);
+        switch ($type) {
+            case 0: return 'in ' . $this->genOne() . ' ' . $this->genTimeUnit();
+            case 1: return 'in ' . $this->genTwoOrMore() . ' ' . $this->genPluralTimeUnit();
+        }
+    }
+
+    /**
      * <repeater> :== "every"
      *     | "every" ORDINAL
      *     | "every" "other"
@@ -708,8 +733,6 @@ class Generator
     /**
      * <time_phrase> ::= "at" <clock_time>
      *     | "at" <time_point_of_day>
-     *     | "in" ONE <time_unit>
-     *     | "in" TWO_OR_MORE <plural_time_unit>
      *     | "in" <time_period_of_day>
      */
     public function genTimePhrase(): string
@@ -718,9 +741,7 @@ class Generator
         switch ($type) {
             case 0: return 'at ' . $this->genClockTime();
             case 1: return 'at ' . $this->genTimePointOfDay();
-            case 2: return 'in ' . $this->genOne() . ' ' . $this->genTimeUnit();
-            case 3: return 'in ' . $this->genTwoOrMore() . ' ' . $this->genPluralTimeUnit();
-            case 4: return 'in ' . $this->genTimePeriodOfDay();
+            case 2: return 'in ' . $this->genTimePeriodOfDay();
         }
     }
 

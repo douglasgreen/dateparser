@@ -130,6 +130,10 @@ echo 'Clock time:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genClockTime')) . PHP_EOL;
 echo PHP_EOL;
 
+echo 'Datetime:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genDatetime')) . PHP_EOL;
+echo PHP_EOL;
+
 echo 'Day unit count:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genDayUnitCount')) . PHP_EOL;
 echo PHP_EOL;
@@ -148,6 +152,10 @@ echo PHP_EOL;
 
 echo 'Plural repeater:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genPluralRepeater')) . PHP_EOL;
+echo PHP_EOL;
+
+echo 'Relative time phrase:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genRelativeTimePhrase')) . PHP_EOL;
 echo PHP_EOL;
 
 echo 'Repeater:' . PHP_EOL;

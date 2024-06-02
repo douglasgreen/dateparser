@@ -168,12 +168,13 @@ Literals contain only literal strings.
 
 <datetime> ::= <simple_date> <optional_time>
 
-<datetime_expression> ::= <datetime_phrase>
-    | <datetime>
-    | <simple_time>
-    | <time_phrase>
+<datetime_expression> ::= <datetime>
+    | <datetime_phrase>
     | <recurring_date>
     | <recurring_time>
+    | <relative_time_phrase>
+    | <simple_time>
+    | <time_phrase>
 
 <datetime_phrase> :== "on" <datetime>
     | "in" <day_unit_count> <optional_time>
@@ -200,6 +201,9 @@ Literals contain only literal strings.
 
 <recurring_time> ::= <optional_frequency> <recurring_time_unit>
     | <repeater> <time_of_day>
+
+<relative_time_phrase> ::= "in" ONE <time_unit>
+    | "in" TWO_OR_MORE <plural_time_unit>
 
 <repeater> :== "every"
     | "every" ORDINAL
@@ -232,8 +236,6 @@ Literals contain only literal strings.
 
 <time_phrase> ::= "at" <clock_time>
     | "at" <time_point_of_day>
-    | "in" ONE <time_unit>
-    | "in" TWO_OR_MORE <plural_time_unit>
     | "in" <time_period_of_day>
 ```
 
