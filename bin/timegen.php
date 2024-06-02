@@ -134,6 +134,10 @@ echo 'Datetime:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genDatetime')) . PHP_EOL;
 echo PHP_EOL;
 
+echo 'Datetime phrase:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genDatetimePhrase')) . PHP_EOL;
+echo PHP_EOL;
+
 echo 'Day unit count:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genDayUnitCount')) . PHP_EOL;
 echo PHP_EOL;

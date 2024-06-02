@@ -204,6 +204,8 @@ Literals contain only literal strings.
 
 <relative_time_phrase> ::= "in" ONE <time_unit>
     | "in" TWO_OR_MORE <plural_time_unit>
+    | <sequence> <time_of_day>
+    | <sequence> <time_unit>
 
 <repeater> :== "every"
     | "every" ORDINAL
@@ -230,9 +232,6 @@ Literals contain only literal strings.
 
 <simple_time> ::= <clock_time>
     | <period_part> <time_period_of_day>
-    | <period_part> <time_unit>
-    | <sequence> <time_of_day>
-    | <sequence> <time_unit>
 
 <time_phrase> ::= "at" <clock_time>
     | "at" <time_point_of_day>

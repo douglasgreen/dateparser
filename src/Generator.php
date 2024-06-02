@@ -20,9 +20,6 @@ use DouglasGreen\Exceptions\ValueException;
     | <simple_time>
     | <time_phrase>
 
-<datetime_phrase> :== "on" <datetime>
-    | "in" <day_unit_count> <optional_time>
-
 <recurring_time> ::= <optional_frequency> <recurring_time_unit>
     | <repeater> <time_of_day>
 
@@ -136,6 +133,19 @@ class Generator
     public function genDatetime(): string
     {
         return $this->genSimpleDate() . ' ' . $this->genOptionalTime();
+    }
+
+    /**
+     * <datetime_phrase> :== "on" <datetime>
+     *     | "in" <day_unit_count> <optional_time>
+     */
+    public function genDatetimePhrase(): string
+    {
+        $type = mt_rand(0, 1);
+        switch ($type) {
+            case 0: return 'on ' . $this->genDatetime();
+            case 1: return 'in ' . $this->genDayUnitCount() . ' ' . $this->genOptionalTime();
+        }
     }
 
     /**
@@ -535,13 +545,17 @@ class Generator
     /**
      * <relative_time_phrase> ::= "in" ONE <time_unit>
      *     | "in" TWO_OR_MORE <plural_time_unit>
+     *     | <sequence> <time_of_day>
+     *     | <sequence> <time_unit>
      */
     public function genRelativeTimePhrase(): string
     {
-        $type = mt_rand(0, 1);
+        $type = mt_rand(0, 3);
         switch ($type) {
             case 0: return 'in ' . $this->genOne() . ' ' . $this->genTimeUnit();
             case 1: return 'in ' . $this->genTwoOrMore() . ' ' . $this->genPluralTimeUnit();
+            case 2: return $this->genSequence() . ' ' . $this->genTimeOfDay();
+            case 3: return $this->genSequence() . ' ' . $this->genTimeUnit();
         }
     }
 
@@ -624,19 +638,13 @@ class Generator
     /**
      * <simple_time> ::= <clock_time>
      *     | <period_part> <time_period_of_day>
-     *     | <period_part> <time_unit>
-     *     | <sequence> <time_of_day>
-     *     | <sequence> <time_unit>
      */
     public function genSimpleTime(): string
     {
-        $type = mt_rand(0, 4);
+        $type = mt_rand(0, 1);
         switch ($type) {
             case 0: return $this->genClockTime();
             case 1: return $this->genPeriodPart() . ' ' . $this->genTimePeriodOfDay();
-            case 2: return $this->genPeriodPart() . ' ' . $this->genTimeUnit();
-            case 3: return $this->genSequence() . ' ' . $this->genTimeOfDay();
-            case 4: return $this->genSequence() . ' ' . $this->genTimeUnit();
         }
     }
 
