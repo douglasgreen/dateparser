@@ -17,9 +17,6 @@ namespace DouglasGreen\DateParser;
 
 <datetime> ::= <simple_date> <optional_time>
 
-<day_unit_count> :== ONE <day_unit>
-    | TWO_OR_MORE <plural_day_unit>
-
 <simple_date> ::= DATE
     | <day_of_week>
     | <day_unit_count> "ago"
@@ -199,6 +196,19 @@ class Generator
             case 2: return 'month';
             case 3: return 'quarter';
             case 4: return 'year';
+        }
+    }
+
+    /**
+     * <day_unit_count> :== ONE <day_unit>
+     *     | TWO_OR_MORE <plural_day_unit>
+     */
+    public function genDayUnitCount(): string
+    {
+        $type = mt_rand(0, 1);
+        switch ($type) {
+            case 0: return $this->genOne() . ' ' . $this->genDayUnit();
+            case 1: return $this->genTwoOrMore() . ' ' . $this->genPluralDayUnit();
         }
     }
 
@@ -682,7 +692,7 @@ class Generator
         switch ($type) {
             case 0: return 'at ' . $this->genClockTime();
             case 1: return 'at ' . $this->genTimePointOfDay();
-            case 2: return 'in 1 ' . $this->genTimeUnit();
+            case 2: return 'in ' . $this->genOne() . ' ' . $this->genTimeUnit();
             case 3: return 'in ' . $this->genTwoOrMore() . ' ' . $this->genPluralTimeUnit();
             case 4: return 'in ' . $this->genTimePeriodOfDay();
         }

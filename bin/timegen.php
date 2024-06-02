@@ -130,6 +130,10 @@ echo 'Clock time:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genClockTime')) . PHP_EOL;
 echo PHP_EOL;
 
+echo 'Day unit count:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genDayUnitCount')) . PHP_EOL;
+echo PHP_EOL;
+
 echo 'Frequency:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genFrequency')) . PHP_EOL;
 echo PHP_EOL;
