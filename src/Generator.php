@@ -1,28 +1,12 @@
-# dateparser
+<?php
 
-A PHP library to parse dates, times, and recurring date expressions
+declare(strict_types=1);
 
-## Setup
+namespace DouglasGreen\DateParser;
 
-See [Project Setup Guide](docs/setup_guide.md).
-
-## Date Expressions
-
-### Tokens
-
--   WORD: Matches any single word composed of alphabetic characters, used to
-    match literals.
--   DATE: Matches various date formats (e.g., 01/02, 2023-01-02).
--   TIME: Matches time in HH:MM format (e.g., 14:30) or HH:MM:SS.
--   HOUR: Matches hour with AM/PM (e.g., 6pm).
--   ORDINAL: Matches ordinal numbers (e.g., 1st, 2nd, 3rd, 4th).
+/*
 -   NUMBER: Matches any number.
 
-### Grammar Rules
-
-Date expressions are described by this context-free grammar.
-
-```
 <datetime_expression> ::= <datetime_phrase>
     | <datetime>
     | <simple_time>
@@ -197,28 +181,96 @@ Date expressions are described by this context-free grammar.
     | "late"
 
 <optional_period_part> ::= <period_part> | ""
-```
+*/
+class Generator
+{
+    /**
+     * DATE: Matches various date formats (e.g., 01/02, 2023-01-02).
+     */
+    public function genDate(): string
+    {
+        $year = mt_rand(1900, 2099);
+        $month = mt_rand(1, 12);
+        if (in_array($month, [4, 6, 9, 11], true)) {
+            $days = 30;
+        } elseif ($month === 2) {
+            $days = 28;
+        } else {
+            $days = 31;
+        }
 
-### Notes
+        $day = mt_rand(1, $days);
 
-Dates are always in year, month, day order. So 2024-12-01, 12-01, and 2024
-January 1 are all valid but 2024-01-12, 01-12, and 1 January 2024 are not valid.
+        if (mt_rand(0, 1) === 0 && $year >= 2000) {
+            $year %= 2000;
+        }
 
-Any token named "date" only refers to dates and not times. Any token named
-"time" only refers to times and not dates. Any token named "datetime" refers to
-a date and/or a time.
+        if (mt_rand(0, 1) === 0) {
+            $month = sprintf('%02d', $month);
+        }
 
-Any token named "phrase" always starts with a literal preposition like "at,
-"in", or "on".
+        if (mt_rand(0, 1) === 0) {
+            $day = sprintf('%02d', $day);
+        }
 
-TIME by itself is a 24-hour clock, of hours, minutes, and optionally seconds.
-<clock_time> allows for the English clock usage of AM and PM. HOUR is just a
-different way of writing whole hours as a combined word, like 8am but not
-8:30am.
+        $sep = mt_rand(0, 1) === 0 ? '/' : '-';
 
-Instead of "semiweekly" use "twice weekly" and so on for the other time units.
+        $parts = mt_rand(0, 1) === 0 ? [$year, $month, $day] : [$month, $day];
 
-Instead of "biweekly" use "every other week" and so on for the other time units.
+        return implode($sep, $parts);
+    }
 
-Literal strings are case insensitive so you can write them with or without
-capital letters, like AM or Am or am.
+    /**
+     * HOUR: Matches hour with AM/PM (e.g., 6pm).
+     */
+    public function genHour(): string
+    {
+        $hour = mt_rand(1, 12);
+
+        if (mt_rand(0, 1) === 0) {
+            $hour .= 'am';
+        } else {
+            $hour .= 'pm';
+        }
+
+        return $hour;
+    }
+
+    /**
+     * ORDINAL: Matches ordinal numbers (e.g., 1st, 2nd, 3rd, 4th).
+     */
+    public function genOrdinal(): string
+    {
+        $number = mt_rand(1, 100);
+
+        if ($number % 10 === 1 && $number % 100 !== 11) {
+            $suffix = 'st';
+        } elseif ($number % 10 === 2 && $number % 100 !== 12) {
+            $suffix = 'nd';
+        } elseif ($number % 10 === 3 && $number % 100 !== 13) {
+            $suffix = 'rd';
+        } else {
+            $suffix = 'th';
+        }
+
+        return $number . $suffix;
+    }
+
+    /**
+     * TIME: Matches time in HH:MM format (e.g., 14:30) or HH:MM:SS.
+     */
+    public function genTime(): string
+    {
+        $hour = mt_rand(0, 23);
+        $minute = sprintf('%02d', mt_rand(0, 59));
+        $second = sprintf('%02d', mt_rand(0, 59));
+
+        if (mt_rand(0, 1) === 0) {
+            $hour = sprintf('%02d', $hour);
+        }
+
+        $parts = mt_rand(0, 1) === 0 ? [$hour, $minute, $second] : [$hour, $minute];
+
+        return implode(':', $parts);
+    }
+}

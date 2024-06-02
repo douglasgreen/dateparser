@@ -58,7 +58,7 @@ class Lexer
 
             (?P<date>\\b(?:\\d\\d(?:\\d\\d)?[/-])?\\d\\d?[/-]\\d\\d?) |
 
-            (?P<time>\\b\\d\\d?:\\d\\d\\b) |
+            (?P<time>\\b\\d\\d?:\\d\\d(?::\\d\\d)?\\b) |
 
             (?P<hour>\\b\\d\\d?(?:am|pm)\\b) |
 
