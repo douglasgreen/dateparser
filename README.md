@@ -1,6 +1,10 @@
 # dateparser
 
-A PHP library to parse dates, times, and recurring date expressions
+A PHP library to parse dates, times, and recurring date expressions.
+
+This library is a replacement for the PHP
+[`strtotime()`](https://www.php.net/manual/en/function.strtotime.php) function
+that parses more date types, including date periods and recurring dates.
 
 ## Setup
 
