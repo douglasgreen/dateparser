@@ -208,14 +208,17 @@ Literals contain only literal strings.
 <simple_date> ::= DATE
     | <day_of_week>
     | <day_unit_count> "ago"
-    | <day_unit_count> <before_or_after> <simple_date>
+    | <day_unit_count> "from now"
     | <month> ONE
     | <month> ORDINAL
     | <month> TWO_OR_MORE
     | ORDINAL
     | ORDINAL <day_of_week>
     | ORDINAL <month>
+    | <period_part> <day_of_week>
+    | <period_part> <day_unit>
     | <period_part> <month>
+    | <period_part> <relative_day>
     | <relative_day>
     | <sequence> <day_of_week>
     | <sequence> <day_unit>
@@ -237,11 +240,10 @@ Literals contain only literal strings.
 ### Notes
 
 The lexer skips articles (a, an, and the) and the word "of" so you can write
-dates in the form "the 4th of July" and it will be interpreted as "4th July".
+dates in the form "the next month" and it will be interpreted as "next month".
 
 Dates are always in year, month, day order. So 2024-12-01, 12-01, and 2024
 January 1 are all valid but 2024-01-12, 01-12, and 1 January 2024 are not valid.
-However 1st January is allowed to mean January 1st.
 
 Any token named "date" only refers to dates and not times. Any token named
 "time" only refers to times and not dates. Any token named "datetime" refers to

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace DouglasGreen\DateParser;
 
+use DouglasGreen\Exceptions\ValueException;
+
 /*
 <datetime_expression> ::= <datetime_phrase>
     | <datetime>
@@ -16,22 +18,6 @@ namespace DouglasGreen\DateParser;
     | "in" <day_unit_count> <optional_time>
 
 <datetime> ::= <simple_date> <optional_time>
-
-<simple_date> ::= DATE
-    | <day_of_week>
-    | <day_unit_count> "ago"
-    | <day_unit_count> <before_or_after> <simple_date>
-    | <month> ONE
-    | <month> ORDINAL
-    | <month> TWO_OR_MORE
-    | ORDINAL
-    | ORDINAL <day_of_week>
-    | ORDINAL <month>
-    | <period_part> <month>
-    | <relative_day>
-    | <sequence> <day_of_week>
-    | <sequence> <day_unit>
-    | <sequence> <month>
 
 <recurring_time> ::= <optional_frequency> <recurring_time_unit>
     | <repeater> <time_of_day>
@@ -117,15 +103,9 @@ class Generator
     {
         $year = mt_rand(1900, 2099);
         $month = mt_rand(1, 12);
-        if (in_array($month, [4, 6, 9, 11], true)) {
-            $days = 30;
-        } elseif ($month === 2) {
-            $days = 28;
-        } else {
-            $days = 31;
-        }
+        $daysInMonth = $this->getDaysInMonth($month);
 
-        $day = mt_rand(1, $days);
+        $day = mt_rand(1, $daysInMonth);
 
         if (mt_rand(0, 1) === 0 && $year >= 2000) {
             $year %= 2000;
@@ -351,9 +331,9 @@ class Generator
     /**
      * ORDINAL: Matches ordinal numbers (e.g., 1st, 2nd, 3rd, 4th).
      */
-    public function genOrdinal(): string
+    public function genOrdinal(int $max = 99): string
     {
-        $number = mt_rand(1, 99);
+        $number = mt_rand(1, $max);
 
         if ($number % 10 === 1 && $number % 100 !== 11) {
             $suffix = 'st';
@@ -571,6 +551,52 @@ class Generator
     }
 
     /**
+     * <simple_date> ::= DATE
+     *     | <day_of_week>
+     *     | <day_unit_count> "ago"
+     *     | <day_unit_count> "from now"
+     *     | <month> ONE
+     *     | <month> ORDINAL
+     *     | <month> TWO_OR_MORE
+     *     | ORDINAL
+     *     | ORDINAL <day_of_week>
+     *     | ORDINAL <month>
+     *     | <period_part> <day_of_week>
+     *     | <period_part> <day_unit>
+     *     | <period_part> <month>
+     *     | <period_part> <relative_day>
+     *     | <relative_day>
+     *     | <sequence> <day_of_week>
+     *     | <sequence> <day_unit>
+     *     | <sequence> <month>
+     */
+    public function genSimpleDate(): string
+    {
+        $type = mt_rand(0, 16);
+        $month = $this->genMonth();
+        $daysInMonth = $this->getDaysInMonth($month);
+        switch ($type) {
+            case 0: return $this->genDate();
+            case 1: return $this->genDayOfWeek();
+            case 2: return $this->genDayUnitCount() . ' ago';
+            case 3: return $this->genDayUnitCount() . ' from now';
+            case 4: return $month . ' ' . $this->genOne();
+            case 5: return $month . ' ' . $this->genOrdinal($daysInMonth);
+            case 6: return $month . ' ' . $this->genTwoOrMore($daysInMonth);
+            case 7: return $this->genOrdinal(31);
+            case 8: return $this->genOrdinal() . ' ' . $this->genDayOfWeek();
+            case 9: return $this->genOrdinal() . ' ' . $this->genMonth();
+            case 10: return $this->genPeriodPart() . ' ' . $this->genDayOfWeek();
+            case 11: return $this->genPeriodPart() . ' ' . $this->genDayUnit();
+            case 12: return $this->genPeriodPart() . ' ' . $this->genMonth();
+            case 13: return $this->genRelativeDay();
+            case 14: return $this->genSequence() . ' ' . $this->genDayOfWeek();
+            case 15: return $this->genSequence() . ' ' . $this->genDayUnit();
+            case 16: return $this->genSequence() . ' ' . $this->genMonth();
+        }
+    }
+
+    /**
      * <simple_time> ::= <clock_time>
      *     | <period_part> <time_period_of_day>
      *     | <period_part> <time_unit>
@@ -716,8 +742,53 @@ class Generator
     /**
      * TWO_OR_MORE: Matches any number 2 or more.
      */
-    public function genTwoOrMore(): string
+    public function genTwoOrMore(int $max = 99): string
     {
-        return (string) mt_rand(2, 99);
+        return (string) mt_rand(2, $max);
+    }
+
+    /**
+     * @throws ValueException
+     */
+    protected function getDaysInMonth(int|string $month): int
+    {
+        switch ($month) {
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
+            case 'January':
+            case 'Jan':
+            case 'March':
+            case 'Mar':
+            case 'May':
+            case 'July':
+            case 'Jul':
+            case 'August':
+            case 'Aug':
+            case 'October':
+            case 'Oct':
+            case 'December':
+            case 'Dec': return 31;
+            case 2:
+            case 'February':
+            case 'Feb': return 29;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+            case 'April':
+            case 'Apr':
+            case 'June':
+            case 'Jun':
+            case 'September':
+            case 'Sep':
+            case 'November':
+            case 'Nov': return 30;
+            default: throw new ValueException('Unknown month: ' . $month);
+        }
     }
 }

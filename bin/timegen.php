@@ -154,6 +154,10 @@ echo 'Repeater:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genRepeater')) . PHP_EOL;
 echo PHP_EOL;
 
+echo 'Simple date:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genSimpleDate', 20)) . PHP_EOL;
+echo PHP_EOL;
+
 echo 'Simple time:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genSimpleTime')) . PHP_EOL;
 echo PHP_EOL;
