@@ -142,6 +142,10 @@ echo 'Date repeat limit:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genDateRepeatLimit')) . PHP_EOL;
 echo PHP_EOL;
 
+echo 'Date repeat specifier:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genDateRepeatSpecifier')) . PHP_EOL;
+echo PHP_EOL;
+
 echo 'Datetime:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genDatetime')) . PHP_EOL;
 echo PHP_EOL;

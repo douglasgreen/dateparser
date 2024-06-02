@@ -89,7 +89,7 @@ Literals contain only literal strings.
     | "Februaries" | "Februarys"
     | "Marches"
     | "Aprils"
-    | "May"
+    | "Mays"
     | "Junes"
     | "Julies" | "Julys"
     | "Augusts"

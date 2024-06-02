@@ -22,16 +22,6 @@ use DouglasGreen\Exceptions\ValueException;
 
 <recurring_date> ::= <date_repeat_specifier> <optional_date_repeat_limit>
 
-date_repeat_specifier> ::= <optional_frequency> <recurring_day_unit>
-    | <plural_day_of_week>
-    | <plural_month>
-    | <plural_repeater> <plural_day_of_week>
-    | <plural_repeater> <plural_day_unit>
-    | <plural_repeater> <plural_month>
-    | <repeater> <day_of_week>
-    | <repeater> <day_unit>
-    | <repeater> <month>
-    | <repeater> ORDINAL
 */
 
 /**
@@ -176,6 +166,35 @@ class Generator
             case 1: return 'for ' . $this->genDayUnitCount();
             case 2: return 'between ' . $this->genSimpleDate() . ' and ' . $this->genSimpleDate();
             case 3: return 'from ' . $this->genSimpleDate() . ' until ' . $this->genSimpleDate();
+        }
+    }
+
+    /**
+     * date_repeat_specifier> ::= <optional_frequency> <recurring_day_unit>
+     *     | <plural_day_of_week>
+     *     | <plural_month>
+     *     | <plural_repeater> <plural_day_of_week>
+     *     | <plural_repeater> <plural_day_unit>
+     *     | <plural_repeater> <plural_month>
+     *     | <repeater> <day_of_week>
+     *     | <repeater> <day_unit>
+     *     | <repeater> <month>
+     *     | <repeater> ORDINAL
+     */
+    public function genDateRepeatSpecifier(): string
+    {
+        $type = mt_rand(0, 9);
+        switch ($type) {
+            case 0: return $this->genOptionalFrequency() . ' ' . $this->genRecurringDayUnit();
+            case 1: return $this->genPluralDayOfWeek();
+            case 2: return $this->genPluralMonth();
+            case 3: return $this->genPluralRepeater() . ' ' . $this->genPluralDayOfWeek();
+            case 4: return $this->genPluralRepeater() . ' ' . $this->genPluralDayUnit();
+            case 5: return $this->genPluralRepeater() . ' ' . $this->genPluralMonth();
+            case 6: return $this->genRepeater() . ' ' . $this->genDayOfWeek();
+            case 7: return $this->genRepeater() . ' ' . $this->genDayUnit();
+            case 8: return $this->genRepeater() . ' ' . $this->genMonth();
+            case 9: return $this->genRepeater() . ' ' . $this->genOrdinal();
         }
     }
 
@@ -521,7 +540,7 @@ class Generator
             case 3: return 'Februarys';
             case 4: return 'Marches';
             case 5: return 'Aprils';
-            case 6: return 'May';
+            case 6: return 'Mays';
             case 7: return 'Junes';
             case 8: return 'Julies';
             case 9: return 'Julys';
