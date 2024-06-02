@@ -12,10 +12,6 @@ namespace DouglasGreen\DateParser;
     | <recurring_date>
     | <recurring_time>
 
-<optional_time> ::= <simple_time>
-    | <time_phrase>
-    | ""
-
 <datetime_phrase> :== "on" <datetime>
     | "in" <day_unit_count> <optional_time>
 
@@ -324,6 +320,21 @@ class Generator
         switch ($type) {
             case 0: return $this->genSequence();
             case 1: return '""';
+        }
+    }
+
+    /**
+     * <optional_time> ::= <simple_time>
+     *     | <time_phrase>
+     *     | ""
+     */
+    public function genOptionalTime(): string
+    {
+        $type = mt_rand(0, 2);
+        switch ($type) {
+            case 0: return $this->genSimpleTime();
+            case 1: return $this->genTimePhrase();
+            case 2: return '""';
         }
     }
 

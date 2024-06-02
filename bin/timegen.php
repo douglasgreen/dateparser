@@ -138,6 +138,10 @@ echo 'Optional frequency:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genOptionalFrequency')) . PHP_EOL;
 echo PHP_EOL;
 
+echo 'Optional time:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genOptionalTime')) . PHP_EOL;
+echo PHP_EOL;
+
 echo 'Plural repeater:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genPluralRepeater')) . PHP_EOL;
 echo PHP_EOL;
