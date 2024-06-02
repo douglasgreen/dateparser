@@ -246,6 +246,50 @@ class Generator
     }
 
     /**
+     * <month> ::= "January" | "Jan"
+     *     | "February" | "Feb"
+     *     | "March" | "Mar"
+     *     | "April" | "Apr"
+     *     | "May"
+     *     | "June" | "Jun"
+     *     | "July" | "Jul"
+     *     | "August" | "Aug"
+     *     | "September" | "Sep"
+     *     | "October" | "Oct"
+     *     | "November" | "Nov"
+     *     | "December" | "Dec"
+     */
+    public function genMonth(): string
+    {
+        $type = mt_rand(0, 22);
+        switch ($type) {
+            case 0: return 'January';
+            case 1: return 'Jan';
+            case 2: return 'February';
+            case 3: return 'Feb';
+            case 4: return 'March';
+            case 5: return 'Mar';
+            case 6: return 'April';
+            case 7: return 'Apr';
+            case 8: return 'May';
+            case 9: return 'June';
+            case 10: return 'Jun';
+            case 11: return 'July';
+            case 12: return 'Jul';
+            case 13: return 'August';
+            case 14: return 'Aug';
+            case 15: return 'September';
+            case 16: return 'Sep';
+            case 17: return 'October';
+            case 18: return 'Oct';
+            case 19: return 'November';
+            case 20: return 'Nov';
+            case 21: return 'December';
+            case 22: return 'Dec';
+        }
+    }
+
+    /**
      * ONE: Matches the number 1.
      */
     public function genOne(): string
@@ -290,23 +334,6 @@ class Generator
     }
 
     /**
-     * <period_part> :== "early"
-     *     | "mid"
-     *     | "middle"
-     *     | "late"
-     */
-    public function genPeriodPart(): string
-    {
-        $type = mt_rand(0, 3);
-        switch ($type) {
-            case 0: return 'early';
-            case 1: return 'mid';
-            case 2: return 'middle';
-            case 3: return 'late';
-        }
-    }
-
-    /**
      * ORDINAL: Matches ordinal numbers (e.g., 1st, 2nd, 3rd, 4th).
      */
     public function genOrdinal(): string
@@ -327,46 +354,19 @@ class Generator
     }
 
     /**
-     * <month> ::= "January" | "Jan"
-     *     | "February" | "Feb"
-     *     | "March" | "Mar"
-     *     | "April" | "Apr"
-     *     | "May"
-     *     | "June" | "Jun"
-     *     | "July" | "Jul"
-     *     | "August" | "Aug"
-     *     | "September" | "Sep"
-     *     | "October" | "Oct"
-     *     | "November" | "Nov"
-     *     | "December" | "Dec"
+     * <period_part> :== "early"
+     *     | "mid"
+     *     | "middle"
+     *     | "late"
      */
-    public function genMonth(): string
+    public function genPeriodPart(): string
     {
-        $type = mt_rand(0, 22);
+        $type = mt_rand(0, 3);
         switch ($type) {
-            case 0: return 'January';
-            case 1: return 'Jan';
-            case 2: return 'February';
-            case 3: return 'Feb';
-            case 4: return 'March';
-            case 5: return 'Mar';
-            case 6: return 'April';
-            case 7: return 'Apr';
-            case 8: return 'May';
-            case 9: return 'June';
-            case 10: return 'Jun';
-            case 11: return 'July';
-            case 12: return 'Jul';
-            case 13: return 'August';
-            case 14: return 'Aug';
-            case 15: return 'September';
-            case 16: return 'Sep';
-            case 17: return 'October';
-            case 18: return 'Oct';
-            case 19: return 'November';
-            case 20: return 'Nov';
-            case 21: return 'December';
-            case 22: return 'Dec';
+            case 0: return 'early';
+            case 1: return 'mid';
+            case 2: return 'middle';
+            case 3: return 'late';
         }
     }
 
