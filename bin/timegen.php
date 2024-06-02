@@ -9,6 +9,9 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 $generator = new Generator();
 
+/**
+ * Tokens
+ */
 echo 'Dates:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genDate')) . PHP_EOL;
 echo PHP_EOL;
@@ -29,10 +32,36 @@ echo 'Number:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genNumber')) . PHP_EOL;
 echo PHP_EOL;
 
+/**
+ * Literals
+ */
 echo 'Before or after:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genBeforeOrAfter')) . PHP_EOL;
 echo PHP_EOL;
 
+echo 'Optional period part:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genOptionalPeriodPart')) . PHP_EOL;
+echo PHP_EOL;
+
+echo 'Period part:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genPeriodPart')) . PHP_EOL;
+echo PHP_EOL;
+
+echo 'Month:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genMonth')) . PHP_EOL;
+echo PHP_EOL;
+
+echo 'Plural day of week:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genPluralDayOfWeek')) . PHP_EOL;
+echo PHP_EOL;
+
+echo 'Plural month:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genPluralMonth')) . PHP_EOL;
+echo PHP_EOL;
+
+/**
+ * Level 1 symbols
+ */
 echo 'Clock time:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genClockTime')) . PHP_EOL;
 echo PHP_EOL;

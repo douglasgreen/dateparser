@@ -194,6 +194,7 @@ Date expressions are described by this context-free grammar.
 
 <period_part> :== "early"
     | "mid"
+    | "middle"
     | "late"
 
 <optional_period_part> ::= <period_part> | ""
@@ -201,8 +202,12 @@ Date expressions are described by this context-free grammar.
 
 ### Notes
 
+The lexer skips articles (a, an, and the) and the word "of" so you can write
+dates in the form "the 4th of July" and it will be interpreted as "4th July".
+
 Dates are always in year, month, day order. So 2024-12-01, 12-01, and 2024
 January 1 are all valid but 2024-01-12, 01-12, and 1 January 2024 are not valid.
+However 1st January is allowed to mean January 1st.
 
 Any token named "date" only refers to dates and not times. Any token named
 "time" only refers to times and not dates. Any token named "datetime" refers to

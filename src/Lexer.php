@@ -82,8 +82,8 @@ class Lexer
             );
 
             if (isset($result['word'])) {
-                // Skip articles.
-                if (in_array(strtolower($result['word']), ['a', 'an', 'the'], true)) {
+                // Skip articles and "of".
+                if (in_array(strtolower($result['word']), ['a', 'an', 'the', 'of'], true)) {
                     continue;
                 }
 
