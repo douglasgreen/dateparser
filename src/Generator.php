@@ -20,9 +20,6 @@ use DouglasGreen\Exceptions\ValueException;
     | <simple_time>
     | <time_phrase>
 
-<recurring_time> ::= <optional_frequency> <recurring_time_unit>
-    | <repeater> <time_of_day>
-
 <recurring_date> ::= <date_repeat_specifier> <optional_date_repeat_limit>
 
 date_repeat_specifier> ::= <optional_frequency> <recurring_day_unit>
@@ -35,10 +32,6 @@ date_repeat_specifier> ::= <optional_frequency> <recurring_day_unit>
     | <repeater> <day_unit>
     | <repeater> <month>
     | <repeater> ORDINAL
-
-<date_repeat_limit> ::= <starting_or_ending> <simple_date>
-    | "for" <day_unit_count>
-    | "from" <simple_date> "until" <simple_date>
 
 <optional_date_repeat_limit> ::= <date_repeat_limit> | ""
 */
@@ -172,16 +165,28 @@ class Generator
     }
 
     /**
-     * <datetime> ::= <simple_date> <optional_time>
-     *     | <complex_date> <optional_time>
+     * <date_repeat_limit> ::= <starting_or_ending> <date_expression>
+     *     | "for" <day_unit_count>
+     *     | "between" <date_expression> "and" <date_expression>
+     *     | "from" <date_expression> "until" <date_expression>
+     */
+    public function genDateRepeatLimit(): string
+    {
+        $type = mt_rand(0, 3);
+        switch ($type) {
+            case 0: return $this->genStartingOrEnding() . ' ' . $this->genSimpleDate();
+            case 1: return 'for ' . $this->genDayUnitCount();
+            case 2: return 'between ' . $this->genSimpleDate() . ' and ' . $this->genSimpleDate();
+            case 3: return 'from ' . $this->genSimpleDate() . ' until ' . $this->genSimpleDate();
+        }
+    }
+
+    /**
+     * <datetime> ::= <date_expression> <optional_time>
      */
     public function genDatetime(): string
     {
-        $type = mt_rand(0, 1);
-        switch ($type) {
-            case 0: return $this->genSimpleDate() . ' ' . $this->genOptionalTime();
-            case 1: return $this->genComplexDate() . ' ' . $this->genOptionalTime();
-        }
+        return $this->genDateExpression() . ' ' . $this->genOptionalTime();
     }
 
     /**
@@ -562,17 +567,32 @@ class Generator
     }
 
     /**
-     * <recurring_time_unit> ::= "secondly"
-     *     | "minutely"
+     * <recurring_time> ::= <optional_frequency> <recurring_time_unit>
+     *     | <repeater> <time_of_day>
+     */
+    public function genRecurringTime(): string
+    {
+        $type = mt_rand(0, 1);
+        switch ($type) {
+            case 0: return $this->genOptionalFrequency() . ' ' . $this->genRecurringTimeUnit();
+            case 1: return $this->genRepeater() . ' ' . $this->genTimeOfDay();
+        }
+    }
+
+    /**
+     * <recurring_time_unit> ::= "per second"
+     *     | "per minute"
+     *     | "per hour"
      *     | "hourly"
      */
     public function genRecurringTimeUnit(): string
     {
-        $type = mt_rand(0, 2);
+        $type = mt_rand(0, 3);
         switch ($type) {
-            case 0: return 'secondly';
-            case 1: return 'minutely';
-            case 2: return 'hourly';
+            case 0: return 'per second';
+            case 1: return 'per minute';
+            case 2: return 'per hour';
+            case 3: return 'hourly';
         }
     }
 

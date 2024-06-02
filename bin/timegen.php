@@ -138,6 +138,10 @@ echo 'Date expression:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genDateExpression')) . PHP_EOL;
 echo PHP_EOL;
 
+echo 'Date repeat limit:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genDateRepeatLimit')) . PHP_EOL;
+echo PHP_EOL;
+
 echo 'Datetime:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genDatetime')) . PHP_EOL;
 echo PHP_EOL;
@@ -164,6 +168,10 @@ echo PHP_EOL;
 
 echo 'Plural repeater:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genPluralRepeater')) . PHP_EOL;
+echo PHP_EOL;
+
+echo 'Recurring time:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genRecurringTime')) . PHP_EOL;
 echo PHP_EOL;
 
 echo 'Relative time phrase:' . PHP_EOL;

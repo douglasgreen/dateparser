@@ -108,8 +108,9 @@ Literals contain only literal strings.
     | "quarterly"
     | "yearly" | "annually"
 
-<recurring_time_unit> ::= "secondly"
-    | "minutely"
+<recurring_time_unit> ::= "per second"
+    | "per minute"
+    | "per hour"
     | "hourly"
 
 <relative_day> ::= "yesterday"
@@ -166,9 +167,10 @@ Literals contain only literal strings.
 <date_expression> ::= <simple_date>
     | <complex_date>
 
-<date_repeat_limit> ::= <starting_or_ending> <simple_date>
+<date_repeat_limit> ::= <starting_or_ending> <date_expression>
     | "for" <day_unit_count>
-    | "from" <simple_date> "until" <simple_date>
+    | "between" <date_expression> "and" <date_expression>
+    | "from" <date_expression> "until" <date_expression>
 
 <date_repeat_specifier> ::= <optional_frequency> <recurring_day_unit>
     | <plural_day_of_week>
@@ -181,8 +183,7 @@ Literals contain only literal strings.
     | <repeater> <month>
     | <repeater> ORDINAL
 
-<datetime> ::= <simple_date> <optional_time>
-    | <complex_date> <optional_time>
+<datetime> ::= <date_expression> <optional_time>
 
 <datetime_expression> ::= <datetime>
     | <datetime_phrase>
