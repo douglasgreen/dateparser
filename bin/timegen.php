@@ -158,6 +158,10 @@ echo 'Frequency:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genFrequency')) . PHP_EOL;
 echo PHP_EOL;
 
+echo 'Optional date repeat limit:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genOptionalDateRepeatLimit')) . PHP_EOL;
+echo PHP_EOL;
+
 echo 'Optional frequency:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genOptionalFrequency')) . PHP_EOL;
 echo PHP_EOL;

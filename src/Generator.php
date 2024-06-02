@@ -32,8 +32,6 @@ date_repeat_specifier> ::= <optional_frequency> <recurring_day_unit>
     | <repeater> <day_unit>
     | <repeater> <month>
     | <repeater> ORDINAL
-
-<optional_date_repeat_limit> ::= <date_repeat_limit> | ""
 */
 
 /**
@@ -351,6 +349,18 @@ class Generator
     public function genOne(): string
     {
         return '1';
+    }
+
+    /**
+     * <optional_date_repeat_limit> ::= <date_repeat_limit> | ""
+     */
+    public function genOptionalDateRepeatLimit(): string
+    {
+        $type = mt_rand(0, 1);
+        switch ($type) {
+            case 0: return $this->genDateRepeatLimit();
+            case 1: return '""';
+        }
     }
 
     /**
