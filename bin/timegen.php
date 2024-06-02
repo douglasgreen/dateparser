@@ -130,6 +130,14 @@ echo 'Clock time:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genClockTime')) . PHP_EOL;
 echo PHP_EOL;
 
+echo 'Complex date:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genComplexDate')) . PHP_EOL;
+echo PHP_EOL;
+
+echo 'Date expression:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genDateExpression')) . PHP_EOL;
+echo PHP_EOL;
+
 echo 'Datetime:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genDatetime')) . PHP_EOL;
 echo PHP_EOL;
@@ -167,7 +175,7 @@ echo implode(PHP_EOL, $generator->collect('genRepeater')) . PHP_EOL;
 echo PHP_EOL;
 
 echo 'Simple date:' . PHP_EOL;
-echo implode(PHP_EOL, $generator->collect('genSimpleDate', 20)) . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genSimpleDate')) . PHP_EOL;
 echo PHP_EOL;
 
 echo 'Simple time:' . PHP_EOL;

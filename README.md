@@ -29,7 +29,7 @@ Tokens are returned by the lexer.
 Literals contain only literal strings.
 
 ```
-<before_or_after> :== "before" | "after"
+<before_or_after> ::= "before" | "after"
 
 <day_of_week> ::= "Monday" | "Mon"
     | "Tuesday" | "Tue"
@@ -62,14 +62,14 @@ Literals contain only literal strings.
 
 <optional_period_part> ::= <period_part> | ""
 
-<optional_sequence> :== "sequence" | ""
+<optional_sequence> ::= "sequence" | ""
 
-<period_part> :== "early"
+<period_part> ::= "early"
     | "mid"
     | "middle"
     | "late"
 
-<plural_day_of_week> :== "Mondays"
+<plural_day_of_week> ::= "Mondays"
     | "Tuesdays"
     | "Wednesdays"
     | "Thursdays"
@@ -112,30 +112,30 @@ Literals contain only literal strings.
     | "minutely"
     | "hourly"
 
-<relative_day> :== "yesterday"
+<relative_day> ::= "yesterday"
     | "today"
     | "tomorrow"
 
-<sequence> :== "last"
+<sequence> ::= "last"
     | "this"
     | "next"
 
-<start_or_end> :== "start" | "end"
+<start_or_end> ::= "start" | "end"
 
-<starting_or_ending> :== "starting"
+<starting_or_ending> ::= "starting"
     | "ending"
     | "since"
     | "until"
 
-<time_of_day> :== <time_period_of_day>
+<time_of_day> ::= <time_period_of_day>
     | <time_point_of_day>
 
-<time_period_of_day> :== "morning"
+<time_period_of_day> ::= "morning"
     | "afternoon"
     | "evening"
     | "night"
 
-<time_point_of_day> :== "noon"
+<time_point_of_day> ::= "noon"
     | "midnight"
 
 <time_unit> ::= "second"
@@ -151,7 +151,22 @@ Literals contain only literal strings.
     | TIME "PM"
     | HOUR
 
-<date_repeat_limit> :== <starting_or_ending> <simple_date>
+<complex_date> ::= <day_unit_count> "ago"
+    | <day_unit_count> "from now"
+    | ORDINAL <month>
+    | <period_part> <day_of_week>
+    | <period_part> <day_unit>
+    | <period_part> <month>
+    | <period_part> <relative_day>
+    | <relative_day>
+    | <sequence> <day_of_week>
+    | <sequence> <day_unit>
+    | <sequence> <month>
+
+<date_expression> ::= <simple_date>
+    | <complex_date>
+
+<date_repeat_limit> ::= <starting_or_ending> <simple_date>
     | "for" <day_unit_count>
     | "from" <simple_date> "until" <simple_date>
 
@@ -167,6 +182,7 @@ Literals contain only literal strings.
     | <repeater> ORDINAL
 
 <datetime> ::= <simple_date> <optional_time>
+    | <complex_date> <optional_time>
 
 <datetime_expression> ::= <datetime>
     | <datetime_phrase>
@@ -176,10 +192,10 @@ Literals contain only literal strings.
     | <simple_time>
     | <time_phrase>
 
-<datetime_phrase> :== "on" <datetime>
+<datetime_phrase> ::= "on" <simple_date> <optional_time>
     | "in" <day_unit_count> <optional_time>
 
-<day_unit_count> :== ONE <day_unit>
+<day_unit_count> ::= ONE <day_unit>
     | TWO_OR_MORE <plural_day_unit>
 
 <frequency> ::= "once"
@@ -187,7 +203,7 @@ Literals contain only literal strings.
     | ONE "time"
     | TWO_OR_MORE "times"
 
-<optional_date_repeat_limit> :== <date_repeat_limit> | ""
+<optional_date_repeat_limit> ::= <date_repeat_limit> | ""
 
 <optional_frequency> ::= <frequency> | ""
 
@@ -195,7 +211,7 @@ Literals contain only literal strings.
     | <time_phrase>
     | ""
 
-<plural_repeater> :== "every" TWO_OR_MORE
+<plural_repeater> ::= "every" TWO_OR_MORE
 
 <recurring_date> ::= <date_repeat_specifier> <optional_date_repeat_limit>
 
@@ -207,28 +223,17 @@ Literals contain only literal strings.
     | <sequence> <time_of_day>
     | <sequence> <time_unit>
 
-<repeater> :== "every"
+<repeater> ::= "every"
     | "every" ORDINAL
     | "every" "other"
 
 <simple_date> ::= DATE
     | <day_of_week>
-    | <day_unit_count> "ago"
-    | <day_unit_count> "from now"
     | <month> ONE
     | <month> ORDINAL
     | <month> TWO_OR_MORE
     | ORDINAL
     | ORDINAL <day_of_week>
-    | ORDINAL <month>
-    | <period_part> <day_of_week>
-    | <period_part> <day_unit>
-    | <period_part> <month>
-    | <period_part> <relative_day>
-    | <relative_day>
-    | <sequence> <day_of_week>
-    | <sequence> <day_unit>
-    | <sequence> <month>
 
 <simple_time> ::= <clock_time>
     | <period_part> <time_period_of_day>

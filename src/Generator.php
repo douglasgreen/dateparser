@@ -36,11 +36,11 @@ date_repeat_specifier> ::= <optional_frequency> <recurring_day_unit>
     | <repeater> <month>
     | <repeater> ORDINAL
 
-<date_repeat_limit> :== <starting_or_ending> <simple_date>
+<date_repeat_limit> ::= <starting_or_ending> <simple_date>
     | "for" <day_unit_count>
     | "from" <simple_date> "until" <simple_date>
 
-<optional_date_repeat_limit> :== <date_repeat_limit> | ""
+<optional_date_repeat_limit> ::= <date_repeat_limit> | ""
 */
 
 /**
@@ -69,7 +69,7 @@ class Generator
     }
 
     /**
-     * <before_or_after> :== "before" | "after"
+     * <before_or_after> ::= "before" | "after"
      */
     public function genBeforeOrAfter(): string
     {
@@ -94,6 +94,37 @@ class Generator
             case 1: return $this->genTime() . ' AM';
             case 2: return $this->genTime() . ' PM';
             case 3: return $this->genHour();
+        }
+    }
+
+    /**
+     * <complex_date> ::= <day_unit_count> "ago"
+     *     | <day_unit_count> "from now"
+     *     | ORDINAL <month>
+     *     | <period_part> <day_of_week>
+     *     | <period_part> <day_unit>
+     *     | <period_part> <month>
+     *     | <period_part> <relative_day>
+     *     | <relative_day>
+     *     | <sequence> <day_of_week>
+     *     | <sequence> <day_unit>
+     *     | <sequence> <month>
+     */
+    public function genComplexDate(): string
+    {
+        $type = mt_rand(0, 10);
+        switch ($type) {
+            case 0: return $this->genDayUnitCount() . ' ago';
+            case 1: return $this->genDayUnitCount() . ' from now';
+            case 2: return $this->genOrdinal() . ' ' . $this->genMonth();
+            case 3: return $this->genPeriodPart() . ' ' . $this->genDayOfWeek();
+            case 4: return $this->genPeriodPart() . ' ' . $this->genDayUnit();
+            case 5: return $this->genPeriodPart() . ' ' . $this->genMonth();
+            case 6: return $this->genPeriodPart() . ' ' . $this->genRelativeDay();
+            case 7: return $this->genRelativeDay();
+            case 8: return $this->genSequence() . ' ' . $this->genDayOfWeek();
+            case 9: return $this->genSequence() . ' ' . $this->genDayUnit();
+            case 10: return $this->genSequence() . ' ' . $this->genMonth();
         }
     }
 
@@ -128,22 +159,40 @@ class Generator
     }
 
     /**
-     * <datetime> ::= <simple_date> <optional_time>
+     * <date_expression> ::= <simple_date>
+     *     | <complex_date>
      */
-    public function genDatetime(): string
+    public function genDateExpression(): string
     {
-        return $this->genSimpleDate() . ' ' . $this->genOptionalTime();
+        $type = mt_rand(0, 1);
+        switch ($type) {
+            case 0: return $this->genSimpleDate();
+            case 1: return $this->genComplexDate();
+        }
     }
 
     /**
-     * <datetime_phrase> :== "on" <datetime>
+     * <datetime> ::= <simple_date> <optional_time>
+     *     | <complex_date> <optional_time>
+     */
+    public function genDatetime(): string
+    {
+        $type = mt_rand(0, 1);
+        switch ($type) {
+            case 0: return $this->genSimpleDate() . ' ' . $this->genOptionalTime();
+            case 1: return $this->genComplexDate() . ' ' . $this->genOptionalTime();
+        }
+    }
+
+    /**
+     * <datetime_phrase> ::= "on" <simple_date> <optional_time>
      *     | "in" <day_unit_count> <optional_time>
      */
     public function genDatetimePhrase(): string
     {
         $type = mt_rand(0, 1);
         switch ($type) {
-            case 0: return 'on ' . $this->genDatetime();
+            case 0: return 'on ' . $this->genSimpleDate() . ' ' . $this->genOptionalTime();
             case 1: return 'in ' . $this->genDayUnitCount() . ' ' . $this->genOptionalTime();
         }
     }
@@ -202,7 +251,7 @@ class Generator
     }
 
     /**
-     * <day_unit_count> :== ONE <day_unit>
+     * <day_unit_count> ::= ONE <day_unit>
      *     | TWO_OR_MORE <plural_day_unit>
      */
     public function genDayUnitCount(): string
@@ -324,7 +373,7 @@ class Generator
     }
 
     /**
-     * <optional_sequence> :== "sequence" | ""
+     * <optional_sequence> ::= "sequence" | ""
      */
     public function genOptionalSequence(): string
     {
@@ -371,7 +420,7 @@ class Generator
     }
 
     /**
-     * <period_part> :== "early"
+     * <period_part> ::= "early"
      *     | "mid"
      *     | "middle"
      *     | "late"
@@ -388,7 +437,7 @@ class Generator
     }
 
     /**
-     * <plural_day_of_week> :== "Mondays"
+     * <plural_day_of_week> ::= "Mondays"
      *     | "Tuesdays"
      *     | "Wednesdays"
      *     | "Thursdays"
@@ -470,7 +519,7 @@ class Generator
     }
 
     /**
-     * <plural_repeater> :== "every" TWO_OR_MORE
+     * <plural_repeater> ::= "every" TWO_OR_MORE
      */
     public function genPluralRepeater(): string
     {
@@ -528,7 +577,7 @@ class Generator
     }
 
     /**
-     * <relative_day> :== "yesterday"
+     * <relative_day> ::= "yesterday"
      *     | "today"
      *     | "tomorrow"
      */
@@ -560,7 +609,7 @@ class Generator
     }
 
     /**
-     * <repeater> :== "every"
+     * <repeater> ::= "every"
      *     | "every" ORDINAL
      *     | "every" "other"
      */
@@ -575,7 +624,7 @@ class Generator
     }
 
     /**
-     * <sequence> :== "last"
+     * <sequence> ::= "last"
      *     | "this"
      *     | "next"
      */
@@ -592,46 +641,25 @@ class Generator
     /**
      * <simple_date> ::= DATE
      *     | <day_of_week>
-     *     | <day_unit_count> "ago"
-     *     | <day_unit_count> "from now"
      *     | <month> ONE
      *     | <month> ORDINAL
      *     | <month> TWO_OR_MORE
      *     | ORDINAL
      *     | ORDINAL <day_of_week>
-     *     | ORDINAL <month>
-     *     | <period_part> <day_of_week>
-     *     | <period_part> <day_unit>
-     *     | <period_part> <month>
-     *     | <period_part> <relative_day>
-     *     | <relative_day>
-     *     | <sequence> <day_of_week>
-     *     | <sequence> <day_unit>
-     *     | <sequence> <month>
      */
     public function genSimpleDate(): string
     {
-        $type = mt_rand(0, 16);
+        $type = mt_rand(0, 6);
         $month = $this->genMonth();
         $daysInMonth = $this->getDaysInMonth($month);
         switch ($type) {
             case 0: return $this->genDate();
             case 1: return $this->genDayOfWeek();
-            case 2: return $this->genDayUnitCount() . ' ago';
-            case 3: return $this->genDayUnitCount() . ' from now';
-            case 4: return $month . ' ' . $this->genOne();
-            case 5: return $month . ' ' . $this->genOrdinal($daysInMonth);
-            case 6: return $month . ' ' . $this->genTwoOrMore($daysInMonth);
-            case 7: return $this->genOrdinal(31);
-            case 8: return $this->genOrdinal() . ' ' . $this->genDayOfWeek();
-            case 9: return $this->genOrdinal() . ' ' . $this->genMonth();
-            case 10: return $this->genPeriodPart() . ' ' . $this->genDayOfWeek();
-            case 11: return $this->genPeriodPart() . ' ' . $this->genDayUnit();
-            case 12: return $this->genPeriodPart() . ' ' . $this->genMonth();
-            case 13: return $this->genRelativeDay();
-            case 14: return $this->genSequence() . ' ' . $this->genDayOfWeek();
-            case 15: return $this->genSequence() . ' ' . $this->genDayUnit();
-            case 16: return $this->genSequence() . ' ' . $this->genMonth();
+            case 2: return $month . ' ' . $this->genOne();
+            case 3: return $month . ' ' . $this->genOrdinal($daysInMonth);
+            case 4: return $month . ' ' . $this->genTwoOrMore($daysInMonth);
+            case 5: return $this->genOrdinal(31);
+            case 6: return $this->genOrdinal() . ' ' . $this->genDayOfWeek();
         }
     }
 
@@ -649,7 +677,7 @@ class Generator
     }
 
     /**
-     * <start_or_end> :== "start" | "end"
+     * <start_or_end> ::= "start" | "end"
      */
     public function genStartOrEnd(): string
     {
@@ -661,7 +689,7 @@ class Generator
     }
 
     /**
-     * <starting_or_ending> :== "starting"
+     * <starting_or_ending> ::= "starting"
      *     | "ending"
      *     | "since"
      *     | "until"
@@ -696,7 +724,7 @@ class Generator
     }
 
     /**
-     * <time_of_day> :== <time_period_of_day>
+     * <time_of_day> ::= <time_period_of_day>
      *     | <time_point_of_day>
      */
     public function genTimeOfDay(): string
@@ -709,7 +737,7 @@ class Generator
     }
 
     /**
-     * <time_period_of_day> :== "morning"
+     * <time_period_of_day> ::= "morning"
      *     | "afternoon"
      *     | "evening"
      *     | "night"
@@ -726,7 +754,7 @@ class Generator
     }
 
     /**
-     * <time_point_of_day> :== "noon"
+     * <time_point_of_day> ::= "noon"
      *     | "midnight"
      */
     public function genTimePointOfDay(): string
