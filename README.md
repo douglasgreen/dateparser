@@ -127,11 +127,15 @@ Literals contain only literal strings.
     | "since"
     | "until"
 
-<time_of_day> :== "morning"
-    | "noon"
+<time_of_day> :== <time_period_of_day>
+    | <time_point_of_day>
+
+<time_period_of_day> :== "morning"
     | "afternoon"
     | "evening"
     | "night"
+
+<time_point_of_day> :== "noon"
     | "midnight"
 
 <time_unit> ::= "second"
@@ -218,16 +222,16 @@ Literals contain only literal strings.
     | <sequence> <month>
 
 <simple_time> ::= <clock_time>
-    | <period_part> <time_of_day>
+    | <period_part> <time_period_of_day>
     | <period_part> <time_unit>
     | <sequence> <time_of_day>
     | <sequence> <time_unit>
 
 <time_phrase> ::= "at" <clock_time>
-    | "at" <time_of_day>
+    | "at" <time_point_of_day>
     | "in" ONE <time_unit>
     | "in" TWO_OR_MORE <plural_time_unit>
-    | "in" <time_of_day>
+    | "in" <time_period_of_day>
 ```
 
 ### Notes

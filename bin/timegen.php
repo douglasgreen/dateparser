@@ -111,6 +111,14 @@ echo 'Time of day:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genTimeOfDay')) . PHP_EOL;
 echo PHP_EOL;
 
+echo 'Time period of day:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genTimePeriodOfDay')) . PHP_EOL;
+echo PHP_EOL;
+
+echo 'Time point of day:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genTimePointOfDay')) . PHP_EOL;
+echo PHP_EOL;
+
 echo 'Time unit:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genTimeUnit')) . PHP_EOL;
 echo PHP_EOL;
@@ -140,4 +148,8 @@ echo PHP_EOL;
 
 echo 'Simple time:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genSimpleTime')) . PHP_EOL;
+echo PHP_EOL;
+
+echo 'Time phrase:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genTimePhrase')) . PHP_EOL;
 echo PHP_EOL;

@@ -16,12 +16,6 @@ namespace DouglasGreen\DateParser;
     | <time_phrase>
     | ""
 
-<time_phrase> ::= "at" <clock_time>
-    | "at" <time_of_day>
-    | "in" ONE <time_unit>
-    | "in" TWO_OR_MORE <plural_time_unit>
-    | "in" <time_of_day>
-
 <datetime_phrase> :== "on" <datetime>
     | "in" <day_unit_count> <optional_time>
 
@@ -557,7 +551,7 @@ class Generator
 
     /**
      * <simple_time> ::= <clock_time>
-     *     | <period_part> <time_of_day>
+     *     | <period_part> <time_period_of_day>
      *     | <period_part> <time_unit>
      *     | <sequence> <time_of_day>
      *     | <sequence> <time_unit>
@@ -567,7 +561,7 @@ class Generator
         $type = mt_rand(0, 4);
         switch ($type) {
             case 0: return $this->genClockTime();
-            case 1: return $this->genPeriodPart() . ' ' . $this->genTimeOfDay();
+            case 1: return $this->genPeriodPart() . ' ' . $this->genTimePeriodOfDay();
             case 2: return $this->genPeriodPart() . ' ' . $this->genTimeUnit();
             case 3: return $this->genSequence() . ' ' . $this->genTimeOfDay();
             case 4: return $this->genSequence() . ' ' . $this->genTimeUnit();
@@ -622,23 +616,64 @@ class Generator
     }
 
     /**
-     * <time_of_day> :== "morning"
-     *     | "noon"
-     *     | "afternoon"
-     *     | "evening"
-     *     | "night"
-     *     | "midnight"
+     * <time_of_day> :== <time_period_of_day>
+     *     | <time_point_of_day>
      */
     public function genTimeOfDay(): string
     {
-        $type = mt_rand(0, 5);
+        $type = mt_rand(0, 1);
+        switch ($type) {
+            case 0: return $this->genTimePeriodOfDay();
+            case 1: return $this->genTimePointOfDay();
+        }
+    }
+
+    /**
+     * <time_period_of_day> :== "morning"
+     *     | "afternoon"
+     *     | "evening"
+     *     | "night"
+     */
+    public function genTimePeriodOfDay(): string
+    {
+        $type = mt_rand(0, 3);
         switch ($type) {
             case 0: return 'morning';
-            case 1: return 'noon';
-            case 2: return 'afternoon';
-            case 3: return 'evening';
-            case 4: return 'night';
-            case 5: return 'midnight';
+            case 1: return 'afternoon';
+            case 2: return 'evening';
+            case 3: return 'night';
+        }
+    }
+
+    /**
+     * <time_point_of_day> :== "noon"
+     *     | "midnight"
+     */
+    public function genTimePointOfDay(): string
+    {
+        $type = mt_rand(0, 1);
+        switch ($type) {
+            case 0: return 'noon';
+            case 1: return 'midnight';
+        }
+    }
+
+    /**
+     * <time_phrase> ::= "at" <clock_time>
+     *     | "at" <time_point_of_day>
+     *     | "in" ONE <time_unit>
+     *     | "in" TWO_OR_MORE <plural_time_unit>
+     *     | "in" <time_period_of_day>
+     */
+    public function genTimePhrase(): string
+    {
+        $type = mt_rand(0, 2);
+        switch ($type) {
+            case 0: return 'at ' . $this->genClockTime();
+            case 1: return 'at ' . $this->genTimePointOfDay();
+            case 2: return 'in 1 ' . $this->genTimeUnit();
+            case 3: return 'in ' . $this->genTwoOrMore() . ' ' . $this->genPluralTimeUnit();
+            case 4: return 'in ' . $this->genTimePeriodOfDay();
         }
     }
 
