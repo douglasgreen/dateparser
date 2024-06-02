@@ -6,9 +6,14 @@ A PHP library to parse dates, times, and recurring date expressions
 
 See [Project Setup Guide](docs/setup_guide.md).
 
-## Date Expressions
+## Grammar Rules
+
+Date expressions are described by this context-free grammar. It is broken down
+into sections.
 
 ### Tokens
+
+Tokens are returned by the lexer.
 
 -   WORD: Matches any single word composed of alphabetic characters, used to
     match literals.
@@ -18,11 +23,121 @@ See [Project Setup Guide](docs/setup_guide.md).
 -   ORDINAL: Matches ordinal numbers (e.g., 1st, 2nd, 3rd, 4th).
 -   NUMBER: Matches any number.
 
-### Grammar Rules
+### Literals
 
-Date expressions are described by this context-free grammar.
+Literals contain only literal strings.
 
 ```
+<before_or_after> :== "before" | "after"
+
+<day_of_week> ::= "Monday" | "Mon"
+    | "Tuesday" | "Tue"
+    | "Wednesday" | "Wed"
+    | "Thursday" | "Thu"
+    | "Friday" | "Fri"
+    | "Saturday" | "Sat"
+    | "Sunday" | "Sun"
+    | "weekday"
+    | "weekend"
+
+<day_unit> ::= "day" | "days"
+    | "week" | "weeks"
+    | "month" | "months"
+    | "quarter" | "quarters"
+    | "year" | "years"
+
+<month> ::= "January" | "Jan"
+    | "February" | "Feb"
+    | "March" | "Mar"
+    | "April" | "Apr"
+    | "May"
+    | "June" | "Jun"
+    | "July" | "Jul"
+    | "August" | "Aug"
+    | "September" | "Sep"
+    | "October" | "Oct"
+    | "November" | "Nov"
+    | "December" | "Dec"
+
+<optional_period_part> ::= <period_part> | ""
+
+<optional_sequence> :== "sequence" | ""
+
+<period_part> :== "early"
+    | "mid"
+    | "middle"
+    | "late"
+
+<plural_day_of_week> :== "Mondays"
+    | "Tuesdays"
+    | "Wednesdays"
+    | "Thursdays"
+    | "Fridays"
+    | "Saturdays"
+    | "Sundays"
+    | "weekdays"
+    | "weekends"
+
+<plural_month> ::= "Januaries" | "Januarys"
+    | "Februaries" | "Februarys"
+    | "Marches"
+    | "Aprils"
+    | "May"
+    | "Junes"
+    | "Julies" | "Julys"
+    | "Augusts"
+    | "Septembers"
+    | "Octobers"
+    | "Novembers"
+    | "Decembers"
+
+<recurring_day_unit> ::= "daily"
+    | "weekly"
+    | "monthly"
+    | "quarterly"
+    | "yearly" | "annually"
+
+<recurring_time_unit> ::= "secondly"
+    | "minutely"
+    | "hourly"
+
+<relative_day> :== "yesterday"
+    | "today"
+    | "tomorrow"
+
+<sequence> :== "last"
+    | "this"
+    | "next"
+
+<start_or_end> :== "start" | "end"
+
+<starting_or_ending> :== "starting"
+    | "ending"
+    | "since"
+    | "until"
+
+<time_of_day> :== "morning"
+    | "noon"
+    | "afternoon"
+    | "evening"
+    | "night"
+    | "midnight"
+
+<time_unit> ::= "second" | "seconds"
+    | "minute" | "minutes"
+    | "hour" | "hours"
+```
+
+### Symbols
+
+```
+<clock_time> ::= TIME
+    | TIME "AM"
+    | TIME "PM"
+    | HOUR
+
+<datetime> ::= <simple_date> <optional_time>
+
 <datetime_expression> ::= <datetime_phrase>
     | <datetime>
     | <simple_time>
@@ -30,48 +145,18 @@ Date expressions are described by this context-free grammar.
     | <recurring_date>
     | <recurring_time>
 
-<optional_time> ::= <simple_time>
-    | <time_phrase>
-    | ""
-
-<clock_time> ::= TIME
-    | TIME "AM"
-    | TIME "PM"
-    | HOUR
-
-<time_phrase> ::= "at" <clock_time>
-    | "at" <time_of_day>
-    | "in" NUMBER <time_unit>
-    | "in" <time_of_day>
-
 <datetime_phrase> :== "on" <datetime>
     | "in" NUMBER <day_unit> <optional_time>
 
-<datetime> ::= <simple_date> <optional_time>
+<frequency> ::= "once"
+    | "twice"
+    | NUMBER "times"
 
-<simple_time> ::= <clock_time>
-    | <period_part> <time_of_day>
-    | <period_part> <time_unit>
-    | <sequence> <time_of_day>
-    | <sequence> <time_unit>
+<optional_frequency> ::= <frequency> | ""
 
-<simple_date> ::= DATE
-    | <day_of_week>
-    | <month> NUMBER
-    | <month> ORDINAL
-    | <period_part> <month>
-    | NUMBER <day_unit> "ago"
-    | NUMBER <day_unit> <before_or_after> <simple_date>
-    | ORDINAL <day_of_week>
-    | ORDINAL <month>
-    | ORDINAL
-    | <relative_day>
-    | <sequence> <day_of_week>
-    | <sequence> <day_unit>
-    | <sequence> <month>
-
-<recurring_time> ::= <optional_frequency> <recurring_time_unit>
-    | <repeater> <time_of_day>
+<optional_time> ::= <simple_time>
+    | <time_phrase>
+    | ""
 
 <recurring_date> ::= <optional_frequency> <recurring_day_unit>
     | <plural_day_of_week>
@@ -89,114 +174,39 @@ Date expressions are described by this context-free grammar.
     | <repeater> <day_unit> "from" <simple_date> "until" <simple_date>
     | <repeater> <day_unit> <simple_date>
 
+<recurring_time> ::= <optional_frequency> <recurring_time_unit>
+    | <repeater> <time_of_day>
+
 <repeater> :== "every"
     | "every" NUMBER
     | "every" ORDINAL
     | "every" "other"
 
-<before_or_after> :== "before" | "after"
+<simple_date> ::= DATE
+    | <day_of_week>
+    | <month> NUMBER
+    | <month> ORDINAL
+    | <period_part> <month>
+    | NUMBER <day_unit> "ago"
+    | NUMBER <day_unit> <before_or_after> <simple_date>
+    | ORDINAL <day_of_week>
+    | ORDINAL <month>
+    | ORDINAL
+    | <relative_day>
+    | <sequence> <day_of_week>
+    | <sequence> <day_unit>
+    | <sequence> <month>
 
-<start_or_end> :== "start" | "end"
+<simple_time> ::= <clock_time>
+    | <period_part> <time_of_day>
+    | <period_part> <time_unit>
+    | <sequence> <time_of_day>
+    | <sequence> <time_unit>
 
-<starting_or_ending> :== "starting"
-    | "ending"
-    | "until"
-
-<sequence> :== "last"
-    | "this"
-    | "next"
-
-<optional_sequence> :== "sequence" | ""
-
-<time_of_day> :== "morning"
-    | "noon"
-    | "afternoon"
-    | "evening"
-    | "night"
-    | "midnight"
-
-<relative_day> :== "yesterday"
-    | "today"
-    | "tomorrow"
-
-<time_unit> ::= "second" | "seconds"
-    | "minute" | "minutes"
-    | "hour" | "hours"
-
-<day_unit> ::= "day" | "days"
-    | "week" | "weeks"
-    | "month" | "months"
-    | "quarter" | "quarters"
-    | "year" | "years"
-
-<frequency> ::= "once"
-    | "twice"
-    | NUMBER "times"
-
-<optional_frequency> ::= <frequency> | ""
-
-<recurring_time_unit> ::= "secondly"
-    | "minutely"
-    | "hourly"
-
-<recurring_day_unit> ::= "daily"
-    | "weekly"
-    | "monthly"
-    | "quarterly"
-    | "yearly" | "annually"
-
-<day_of_week> ::= "Monday" | "Mon"
-    | "Tuesday" | "Tue"
-    | "Wednesday" | "Wed"
-    | "Thursday" | "Thu"
-    | "Friday" | "Fri"
-    | "Saturday" | "Sat"
-    | "Sunday" | "Sun"
-    | "weekday"
-    | "weekend"
-
-<plural_day_of_week> :== "Mondays"
-    | "Tuesdays"
-    | "Wednesdays"
-    | "Thursdays"
-    | "Fridays"
-    | "Saturdays"
-    | "Sundays"
-    | "weekdays"
-    | "weekends"
-
-<month> ::= "January" | "Jan"
-    | "February" | "Feb"
-    | "March" | "Mar"
-    | "April" | "Apr"
-    | "May"
-    | "June" | "Jun"
-    | "July" | "Jul"
-    | "August" | "Aug"
-    | "September" | "Sep"
-    | "October" | "Oct"
-    | "November" | "Nov"
-    | "December" | "Dec"
-
-<plural_month> ::= "Januaries" | "Januarys"
-    | "Februaries" | "Februarys"
-    | "Marches"
-    | "Aprils"
-    | "May"
-    | "Junes"
-    | "Julies" | "Julys"
-    | "Augusts"
-    | "Septembers"
-    | "Octobers"
-    | "Novembers"
-    | "Decembers"
-
-<period_part> :== "early"
-    | "mid"
-    | "middle"
-    | "late"
-
-<optional_period_part> ::= <period_part> | ""
+<time_phrase> ::= "at" <clock_time>
+    | "at" <time_of_day>
+    | "in" NUMBER <time_unit>
+    | "in" <time_of_day>
 ```
 
 ### Notes

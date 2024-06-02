@@ -66,32 +66,6 @@ namespace DouglasGreen\DateParser;
     | <repeater> <day_unit> "from" <simple_date> "until" <simple_date>
     | <repeater> <day_unit> <simple_date>
 
-<start_or_end> :== "start" | "end"
-
-<starting_or_ending> :== "starting"
-    | "ending"
-    | "until"
-
-<sequence> :== "last"
-    | "this"
-    | "next"
-
-<optional_sequence> :== "sequence" | ""
-
-<time_of_day> :== "morning"
-    | "noon"
-    | "afternoon"
-    | "evening"
-    | "night"
-    | "midnight"
-
-<relative_day> :== "yesterday"
-    | "today"
-    | "tomorrow"
-
-<time_unit> ::= "second" | "seconds"
-    | "minute" | "minutes"
-    | "hour" | "hours"
 */
 
 /**
@@ -306,6 +280,18 @@ class Generator
     }
 
     /**
+     * <optional_sequence> :== "sequence" | ""
+     */
+    public function genOptionalSequence(): string
+    {
+        $type = mt_rand(0, 1);
+        switch ($type) {
+            case 0: return $this->genSequence();
+            case 1: return '""';
+        }
+    }
+
+    /**
      * <period_part> :== "early"
      *     | "mid"
      *     | "middle"
@@ -485,6 +471,21 @@ class Generator
     }
 
     /**
+     * <relative_day> :== "yesterday"
+     *     | "today"
+     *     | "tomorrow"
+     */
+    public function genRelativeDay(): string
+    {
+        $type = mt_rand(0, 2);
+        switch ($type) {
+            case 0: return 'yesterday';
+            case 1: return 'today';
+            case 2: return 'tomorrow';
+        }
+    }
+
+    /**
      * <repeater> :== "every"
      *     | "every" NUMBER
      *     | "every" ORDINAL
@@ -498,6 +499,50 @@ class Generator
             case 1: return 'every ' . $this->genNumber();
             case 2: return 'every ' . $this->genOrdinal();
             case 3: return 'every other';
+        }
+    }
+
+    /**
+     * <sequence> :== "last"
+     *     | "this"
+     *     | "next"
+     */
+    public function genSequence(): string
+    {
+        $type = mt_rand(0, 2);
+        switch ($type) {
+            case 0: return 'last';
+            case 1: return 'this';
+            case 2: return 'next';
+        }
+    }
+
+    /**
+     * <start_or_end> :== "start" | "end"
+     */
+    public function genStartOrEnd(): string
+    {
+        $type = mt_rand(0, 1);
+        switch ($type) {
+            case 0: return 'start';
+            case 1: return 'end';
+        }
+    }
+
+    /**
+     * <starting_or_ending> :== "starting"
+     *     | "ending"
+     *     | "since"
+     *     | "until"
+     */
+    public function genStartingOrEnding(): string
+    {
+        $type = mt_rand(0, 3);
+        switch ($type) {
+            case 0: return 'starting';
+            case 1: return 'ending';
+            case 2: return 'since';
+            case 3: return 'until';
         }
     }
 
@@ -517,5 +562,44 @@ class Generator
         $parts = mt_rand(0, 1) === 0 ? [$hour, $minute, $second] : [$hour, $minute];
 
         return implode(':', $parts);
+    }
+
+    /**
+     * <time_of_day> :== "morning"
+     *     | "noon"
+     *     | "afternoon"
+     *     | "evening"
+     *     | "night"
+     *     | "midnight"
+     */
+    public function genTimeOfDay(): string
+    {
+        $type = mt_rand(0, 5);
+        switch ($type) {
+            case 0: return 'morning';
+            case 1: return 'noon';
+            case 2: return 'afternoon';
+            case 3: return 'evening';
+            case 4: return 'night';
+            case 5: return 'midnight';
+        }
+    }
+
+    /**
+     * <time_unit> ::= "second" | "seconds"
+     *     | "minute" | "minutes"
+     *     | "hour" | "hours"
+     */
+    public function genTimeUnit(): string
+    {
+        $type = mt_rand(0, 5);
+        switch ($type) {
+            case 0: return 'second';
+            case 1: return 'seconds';
+            case 2: return 'minute';
+            case 3: return 'minutes';
+            case 4: return 'hour';
+            case 5: return 'hours';
+        }
     }
 }

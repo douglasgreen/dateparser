@@ -47,16 +47,20 @@ echo 'Day unit:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genDayUnit')) . PHP_EOL;
 echo PHP_EOL;
 
+echo 'Month:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genMonth')) . PHP_EOL;
+echo PHP_EOL;
+
 echo 'Optional period part:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genOptionalPeriodPart')) . PHP_EOL;
 echo PHP_EOL;
 
-echo 'Period part:' . PHP_EOL;
-echo implode(PHP_EOL, $generator->collect('genPeriodPart')) . PHP_EOL;
+echo 'Optional sequence:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genOptionalSequence')) . PHP_EOL;
 echo PHP_EOL;
 
-echo 'Month:' . PHP_EOL;
-echo implode(PHP_EOL, $generator->collect('genMonth')) . PHP_EOL;
+echo 'Period part:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genPeriodPart')) . PHP_EOL;
 echo PHP_EOL;
 
 echo 'Plural day of week:' . PHP_EOL;
@@ -75,8 +79,32 @@ echo 'Recurring time unit:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genRecurringTimeUnit')) . PHP_EOL;
 echo PHP_EOL;
 
+echo 'Relative day:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genRelativeDay')) . PHP_EOL;
+echo PHP_EOL;
+
+echo 'Sequence:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genSequence')) . PHP_EOL;
+echo PHP_EOL;
+
+echo 'Start or end:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genStartOrEnd')) . PHP_EOL;
+echo PHP_EOL;
+
+echo 'Starting or ending:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genStartingOrEnding')) . PHP_EOL;
+echo PHP_EOL;
+
+echo 'Time of day:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genTimeOfDay')) . PHP_EOL;
+echo PHP_EOL;
+
+echo 'Time unit:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genTimeUnit')) . PHP_EOL;
+echo PHP_EOL;
+
 /**
- * Level 1 symbols
+ * Symbols
  */
 echo 'Clock time:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genClockTime')) . PHP_EOL;
