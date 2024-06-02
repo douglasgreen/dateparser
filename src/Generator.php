@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace DouglasGreen\DateParser;
 
 /*
--   NUMBER: Matches any number.
-
 <datetime_expression> ::= <datetime_phrase>
     | <datetime>
     | <simple_time>
@@ -17,11 +15,6 @@ namespace DouglasGreen\DateParser;
 <optional_time> ::= <simple_time>
     | <time_phrase>
     | ""
-
-<clock_time> ::= TIME
-    | TIME "AM"
-    | TIME "PM"
-    | HOUR
 
 <time_phrase> ::= "at" <clock_time>
     | "at" <time_of_day>
@@ -72,13 +65,6 @@ namespace DouglasGreen\DateParser;
     | <repeater> <day_unit> "for" NUMBER <day_unit>
     | <repeater> <day_unit> "from" <simple_date> "until" <simple_date>
     | <repeater> <day_unit> <simple_date>
-
-<repeater> :== "every"
-    | "every" NUMBER
-    | "every" ORDINAL
-    | "every" "other"
-
-<before_or_after> :== "before" | "after"
 
 <start_or_end> :== "start" | "end"
 
@@ -185,6 +171,53 @@ namespace DouglasGreen\DateParser;
 class Generator
 {
     /**
+     * @return list<string>
+     */
+    public function collect(string $methodName, int $times = 10): array
+    {
+        $results = [];
+
+        for ($i = 0; $i < $times; ++$i) {
+            $result = $this->{$methodName}();
+            $results[] = $result;
+        }
+
+        $results = array_unique($results);
+        natsort($results);
+
+        return $results;
+    }
+
+    /**
+     * <before_or_after> :== "before" | "after"
+     */
+    public function genBeforeOrAfter(): string
+    {
+        $type = mt_rand(0, 1);
+        switch ($type) {
+            case 0: return 'before';
+            case 1: return 'after';
+        }
+    }
+
+    /**
+     * <clock_time> ::= TIME
+     *     | TIME "AM"
+     *     | TIME "PM"
+     *     | HOUR
+     */
+    public function genClockTime(): string
+    {
+        $type = mt_rand(0, 3);
+        switch ($type) {
+            case 0: return $this->genTime();
+            case 1: return $this->genTime() . ' AM';
+            case 2: return $this->genTime() . ' PM';
+            case 3: return $this->genHour();
+        }
+    }
+
+    /**
      * DATE: Matches various date formats (e.g., 01/02, 2023-01-02).
      */
     public function genDate(): string
@@ -237,11 +270,19 @@ class Generator
     }
 
     /**
+     * NUMBER: Matches any number.
+     */
+    public function genNumber(): string
+    {
+        return (string) mt_rand(1, 99);
+    }
+
+    /**
      * ORDINAL: Matches ordinal numbers (e.g., 1st, 2nd, 3rd, 4th).
      */
     public function genOrdinal(): string
     {
-        $number = mt_rand(1, 100);
+        $number = mt_rand(1, 99);
 
         if ($number % 10 === 1 && $number % 100 !== 11) {
             $suffix = 'st';
@@ -254,6 +295,23 @@ class Generator
         }
 
         return $number . $suffix;
+    }
+
+    /**
+     * <repeater> :== "every"
+     *     | "every" NUMBER
+     *     | "every" ORDINAL
+     *     | "every" "other"
+     */
+    public function genRepeater(): string
+    {
+        $type = mt_rand(0, 3);
+        switch ($type) {
+            case 0: return 'every';
+            case 1: return 'every ' . $this->genNumber();
+            case 2: return 'every ' . $this->genOrdinal();
+            case 3: return 'every other';
+        }
     }
 
     /**
