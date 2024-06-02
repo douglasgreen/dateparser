@@ -9,20 +9,8 @@ use DouglasGreen\Exceptions\ValueException;
 /**
  * @todo check rand range and case numbers
  * @todo check that all functions and symbols are used
+ * @todo develop logic of filling in missing parts of dates, like 'always on 1st'
  */
-
-/*
-<datetime_expression> ::= <datetime>
-    | <datetime_phrase>
-    | <recurring_date>
-    | <recurring_time>
-    | <relative_time_phrase>
-    | <simple_time>
-    | <time_phrase>
-
-<recurring_date> ::= <date_repeat_specifier> <optional_date_repeat_limit>
-
-*/
 
 /**
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
@@ -204,6 +192,29 @@ class Generator
     public function genDatetime(): string
     {
         return $this->genDateExpression() . ' ' . $this->genOptionalTime();
+    }
+
+    /**
+     * <datetime_expression> ::= <datetime>
+     *     | <datetime_phrase>
+     *     | <recurring_date>
+     *     | <recurring_time>
+     *     | <relative_time_phrase>
+     *     | <simple_time>
+     *     | <time_phrase>
+     */
+    public function genDatetimeExpression(): string
+    {
+        $type = mt_rand(0, 6);
+        switch ($type) {
+            case 0: return $this->genDatetime();
+            case 1: return $this->genDatetimePhrase();
+            case 2: return $this->genRecurringDate();
+            case 3: return $this->genRecurringTime();
+            case 4: return $this->genRelativeTimePhrase();
+            case 5: return $this->genSimpleTime();
+            case 6: return $this->genTimePhrase();
+        }
     }
 
     /**
@@ -573,6 +584,14 @@ class Generator
             case 1: return 'minutes';
             case 2: return 'hours';
         }
+    }
+
+    /**
+     * <recurring_date> ::= <date_repeat_specifier> <optional_date_repeat_limit>
+     */
+    public function genRecurringDate(): string
+    {
+        return $this->genDateRepeatSpecifier() . ' ' . $this->genOptionalDateRepeatLimit();
     }
 
     /**
