@@ -56,13 +56,13 @@ class Lexer
         $pattern = '%
             (?P<word>\\b[a-zA-Z][a-zA-Z]*\\b) |
 
-            (?P<day>\\b\\d+(st|nd|rd|th)\\b) |
-
             (?P<date>\\b(?:\\d\\d(?:\\d\\d)?[/-])?\\d\\d?[/-]\\d\\d?) |
 
             (?P<time>\\b\\d\\d?:\\d\\d\\b) |
 
             (?P<hour>\\b\\d\\d?(?:am|pm)\\b) |
+
+            (?P<ordinal>\\b\\d+(st|nd|rd|th)\\b) |
 
             (?P<number>\\b\\d+\\b)
         %isx';
@@ -88,14 +88,14 @@ class Lexer
                 }
 
                 $type = 'word';
-            } elseif (isset($result['day'])) {
-                $type = 'day';
             } elseif (isset($result['date'])) {
                 $type = 'date';
             } elseif (isset($result['time'])) {
                 $type = 'time';
             } elseif (isset($result['hour'])) {
                 $type = 'hour';
+            } elseif (isset($result['ordinal'])) {
+                $type = 'ordinal';
             } elseif (isset($result['number'])) {
                 $type = 'number';
             } else {
