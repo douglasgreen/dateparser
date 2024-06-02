@@ -24,7 +24,7 @@ class LexerTest extends TestCase
             ['6 weeks before 21 Jul', [new Token('number', '6'), new Token('word', 'weeks'), new Token('word', 'before'), new Token('number', '21'), new Token('word', 'Jul')]],
             ['after 11 days', [new Token('word', 'after'), new Token('number', '11'), new Token('word', 'days')]],
             ['daily', [new Token('word', 'daily')]],
-            ['end of month', [new Token('word', 'end'), new Token('word', 'of'), new Token('word', 'month')]],
+            ['end of month', [new Token('word', 'end'), new Token('word', 'month')]],
             ['every 12 hours starting at 9pm', [new Token('word', 'every'), new Token('number', '12'), new Token('word', 'hours'), new Token('word', 'starting'), new Token('word', 'at'), new Token('hour', '9pm')]],
             ['every 13th', [new Token('word', 'every'), new Token('ordinal', '13th')]],
             ['every 14 jan, 14 apr, 15 jun, 15 sep', [new Token('word', 'every'), new Token('number', '14'), new Token('word', 'jan'), new Token('number', '14'), new Token('word', 'apr'), new Token('number', '15'), new Token('word', 'jun'), new Token('number', '15'), new Token('word', 'sep')]],

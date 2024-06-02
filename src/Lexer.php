@@ -58,13 +58,13 @@ class Lexer
 
             (?P<date>\\b(?:\\d\\d(?:\\d\\d)?[/-])?\\d\\d?[/-]\\d\\d?) |
 
-            (?P<time>\\b\\d\\d?:\\d\\d(?::\\d\\d)?\\b) |
+            (?P<time>(?:0?[0-9]|1[0-9]|2[0-3]):[0-5]\\d(?::[0-5]\\d)?\\b) |
 
-            (?P<hour>\\b\\d\\d?(?:am|pm)\\b) |
+            (?P<hour>\\b(?:[1-9]|1[012])(?:am|pm)\\b) |
 
-            (?P<ordinal>\\b\\d+(st|nd|rd|th)\\b) |
+            (?P<ordinal>\\b[1-9]\\d*(st|nd|rd|th)\\b) |
 
-            (?P<number>\\b\\d+\\b)
+            (?P<number>\\b[1-9]\\d*\\b)
         %isx';
 
         $result = preg_match_all($pattern, $this->input, $matches, PREG_SET_ORDER);
