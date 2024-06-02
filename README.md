@@ -98,6 +98,10 @@ Literals contain only literal strings.
     | "Novembers"
     | "Decembers"
 
+<plural_time_unit> ::= "seconds"
+    | "minutes"
+    | "hours"
+
 <recurring_day_unit> ::= "daily"
     | "weekly"
     | "monthly"
@@ -130,9 +134,9 @@ Literals contain only literal strings.
     | "night"
     | "midnight"
 
-<time_unit> ::= "second" | "seconds"
-    | "minute" | "minutes"
-    | "hour" | "hours"
+<time_unit> ::= "second"
+    | "minute"
+    | "hour"
 ```
 
 ### Symbols
@@ -142,6 +146,21 @@ Literals contain only literal strings.
     | TIME "AM"
     | TIME "PM"
     | HOUR
+
+<date_repeat_limit> :== <starting_or_ending> <simple_date>
+    | "for" <day_unit_count>
+    | "from" <simple_date> "until" <simple_date>
+
+<date_repeat_specifier> ::= <optional_frequency> <recurring_day_unit>
+    | <plural_day_of_week>
+    | <plural_month>
+    | <plural_repeater> <plural_day_of_week>
+    | <plural_repeater> <plural_day_unit>
+    | <plural_repeater> <plural_month>
+    | <repeater> <day_of_week>
+    | <repeater> <day_unit>
+    | <repeater> <month>
+    | <repeater> ORDINAL
 
 <datetime> ::= <simple_date> <optional_time>
 
@@ -153,13 +172,17 @@ Literals contain only literal strings.
     | <recurring_time>
 
 <datetime_phrase> :== "on" <datetime>
-    | "in" ONE <day_unit> <optional_time>
-    | "in" TWO_OR_MORE <plural_day_unit> <optional_time>
+    | "in" <day_unit_count> <optional_time>
+
+<day_unit_count> :== ONE <day_unit>
+    | TWO_OR_MORE <plural_day_unit>
 
 <frequency> ::= "once"
     | "twice"
     | ONE "time"
     | TWO_OR_MORE "times"
+
+<optional_date_repeat_limit> :== <date_repeat_limit> | ""
 
 <optional_frequency> ::= <frequency> | ""
 
@@ -167,40 +190,28 @@ Literals contain only literal strings.
     | <time_phrase>
     | ""
 
-<recurring_date> ::= <optional_frequency> <recurring_day_unit>
-    | <plural_day_of_week>
-    | <plural_month>
-    | <repeater> <day_of_week>
-    | <repeater> NUMBER <plural_day_of_week>
-    | <repeater> NUMBER <plural_month>
-    | <repeater> NUMBER <day_unit> <starting_or_ending> <simple_date>
-    | <repeater> ORDINAL
-    | <repeater> ORDINAL <day_of_week>
-    | <repeater> ORDINAL <month>
-    | <repeater> ORDINAL ORDINAL
-    | <repeater> <day_unit>
-    | <repeater> <day_unit> "for" NUMBER <day_unit>
-    | <repeater> <day_unit> "from" <simple_date> "until" <simple_date>
-    | <repeater> <day_unit> <simple_date>
+<plural_repeater> :== "every" TWO_OR_MORE
+
+<recurring_date> ::= <date_repeat_specifier> <optional_date_repeat_limit>
 
 <recurring_time> ::= <optional_frequency> <recurring_time_unit>
     | <repeater> <time_of_day>
 
 <repeater> :== "every"
-    | "every" TWO_OR_MORE
     | "every" ORDINAL
     | "every" "other"
 
 <simple_date> ::= DATE
     | <day_of_week>
-    | <month> NUMBER
+    | <day_unit_count> "ago"
+    | <day_unit_count> <before_or_after> <simple_date>
+    | <month> ONE
     | <month> ORDINAL
-    | <period_part> <month>
-    | NUMBER <day_unit> "ago"
-    | NUMBER <day_unit> <before_or_after> <simple_date>
+    | <month> TWO_OR_MORE
+    | ORDINAL
     | ORDINAL <day_of_week>
     | ORDINAL <month>
-    | ORDINAL
+    | <period_part> <month>
     | <relative_day>
     | <sequence> <day_of_week>
     | <sequence> <day_unit>
@@ -214,7 +225,8 @@ Literals contain only literal strings.
 
 <time_phrase> ::= "at" <clock_time>
     | "at" <time_of_day>
-    | "in" NUMBER <time_unit>
+    | "in" ONE <time_unit>
+    | "in" TWO_OR_MORE <plural_time_unit>
     | "in" <time_of_day>
 ```
 

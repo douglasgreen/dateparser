@@ -18,24 +18,29 @@ namespace DouglasGreen\DateParser;
 
 <time_phrase> ::= "at" <clock_time>
     | "at" <time_of_day>
-    | "in" NUMBER <time_unit>
+    | "in" ONE <time_unit>
+    | "in" TWO_OR_MORE <plural_time_unit>
     | "in" <time_of_day>
 
 <datetime_phrase> :== "on" <datetime>
-    | "in" NUMBER <day_unit> <optional_time>
+    | "in" <day_unit_count> <optional_time>
 
 <datetime> ::= <simple_date> <optional_time>
 
+<day_unit_count> :== ONE <day_unit>
+    | TWO_OR_MORE <plural_day_unit>
+
 <simple_date> ::= DATE
     | <day_of_week>
-    | <month> NUMBER
+    | <day_unit_count> "ago"
+    | <day_unit_count> <before_or_after> <simple_date>
+    | <month> ONE
     | <month> ORDINAL
-    | <period_part> <month>
-    | NUMBER <day_unit> "ago"
-    | NUMBER <day_unit> <before_or_after> <simple_date>
+    | <month> TWO_OR_MORE
+    | ORDINAL
     | ORDINAL <day_of_week>
     | ORDINAL <month>
-    | ORDINAL
+    | <period_part> <month>
     | <relative_day>
     | <sequence> <day_of_week>
     | <sequence> <day_unit>
@@ -44,22 +49,24 @@ namespace DouglasGreen\DateParser;
 <recurring_time> ::= <optional_frequency> <recurring_time_unit>
     | <repeater> <time_of_day>
 
-<recurring_date> ::= <optional_frequency> <recurring_day_unit>
+<recurring_date> ::= <date_repeat_specifier> <optional_date_repeat_limit>
+
+date_repeat_specifier> ::= <optional_frequency> <recurring_day_unit>
     | <plural_day_of_week>
     | <plural_month>
+    | <plural_repeater> <plural_day_of_week>
+    | <plural_repeater> <plural_day_unit>
+    | <plural_repeater> <plural_month>
     | <repeater> <day_of_week>
-    | <repeater> NUMBER <plural_day_of_week>
-    | <repeater> NUMBER <plural_month>
-    | <repeater> NUMBER <day_unit> <starting_or_ending> <simple_date>
-    | <repeater> ORDINAL
-    | <repeater> ORDINAL <day_of_week>
-    | <repeater> ORDINAL <month>
-    | <repeater> ORDINAL ORDINAL
     | <repeater> <day_unit>
-    | <repeater> <day_unit> "for" NUMBER <day_unit>
-    | <repeater> <day_unit> "from" <simple_date> "until" <simple_date>
-    | <repeater> <day_unit> <simple_date>
+    | <repeater> <month>
+    | <repeater> ORDINAL
 
+<date_repeat_limit> :== <starting_or_ending> <simple_date>
+    | "for" <day_unit_count>
+    | "from" <simple_date> "until" <simple_date>
+
+<optional_date_repeat_limit> :== <date_repeat_limit> | ""
 */
 
 /**
@@ -187,26 +194,21 @@ class Generator
     }
 
     /**
-     * <day_unit> ::= "day" | "days"
-     *     | "week" | "weeks"
-     *     | "month" | "months"
-     *     | "quarter" | "quarters"
-     *     | "year" | "years"
+     * <day_unit> ::= "day"
+     *     | "week"
+     *     | "month"
+     *     | "quarter"
+     *     | "year"
      */
     public function genDayUnit(): string
     {
-        $type = mt_rand(0, 9);
+        $type = mt_rand(0, 4);
         switch ($type) {
             case 0: return 'day';
-            case 1: return 'days';
-            case 2: return 'week';
-            case 3: return 'weeks';
-            case 4: return 'month';
-            case 5: return 'months';
-            case 6: return 'quarter';
-            case 7: return 'quarters';
-            case 8: return 'year';
-            case 9: return 'years';
+            case 1: return 'week';
+            case 2: return 'month';
+            case 3: return 'quarter';
+            case 4: return 'year';
         }
     }
 
@@ -396,6 +398,25 @@ class Generator
     }
 
     /**
+     * <plural_day_unit> ::= "days"
+     *     | "weeks"
+     *     | "months"
+     *     | "quarters"
+     *     | "years"
+     */
+    public function genPluralDayUnit(): string
+    {
+        $type = mt_rand(0, 4);
+        switch ($type) {
+            case 0: return 'days';
+            case 1: return 'weeks';
+            case 2: return 'months';
+            case 3: return 'quarters';
+            case 4: return 'years';
+        }
+    }
+
+    /**
      * <plural_month> ::= "Januaries" | "Januarys"
      *     | "Februaries" | "Februarys"
      *     | "Marches"
@@ -428,6 +449,29 @@ class Generator
             case 12: return 'Octobers';
             case 13: return 'Novembers';
             case 14: return 'Decembers';
+        }
+    }
+
+    /**
+     * <plural_repeater> :== "every" TWO_OR_MORE
+     */
+    public function genPluralRepeater(): string
+    {
+        return 'every ' . $this->genTwoOrMore();
+    }
+
+    /**
+     * <time_unit> ::= "seconds"
+     *     | "minutes"
+     *     | "hours"
+     */
+    public function genPluralTimeUnit(): string
+    {
+        $type = mt_rand(0, 2);
+        switch ($type) {
+            case 0: return 'seconds';
+            case 1: return 'minutes';
+            case 2: return 'hours';
         }
     }
 
@@ -483,18 +527,16 @@ class Generator
 
     /**
      * <repeater> :== "every"
-     *     | "every" TWO_OR_MORE
      *     | "every" ORDINAL
      *     | "every" "other"
      */
     public function genRepeater(): string
     {
-        $type = mt_rand(0, 3);
+        $type = mt_rand(0, 2);
         switch ($type) {
             case 0: return 'every';
-            case 1: return 'every ' . $this->genTwoOrMore();
-            case 2: return 'every ' . $this->genOrdinal();
-            case 3: return 'every other';
+            case 1: return 'every ' . $this->genOrdinal();
+            case 2: return 'every other';
         }
     }
 
@@ -601,20 +643,17 @@ class Generator
     }
 
     /**
-     * <time_unit> ::= "second" | "seconds"
-     *     | "minute" | "minutes"
-     *     | "hour" | "hours"
+     * <time_unit> ::= "second"
+     *     | "minute"
+     *     | "hour"
      */
     public function genTimeUnit(): string
     {
-        $type = mt_rand(0, 5);
+        $type = mt_rand(0, 2);
         switch ($type) {
             case 0: return 'second';
-            case 1: return 'seconds';
-            case 2: return 'minute';
-            case 3: return 'minutes';
-            case 4: return 'hour';
-            case 5: return 'hours';
+            case 1: return 'minute';
+            case 2: return 'hour';
         }
     }
 
@@ -625,5 +664,4 @@ class Generator
     {
         return (string) mt_rand(2, 99);
     }
-
 }

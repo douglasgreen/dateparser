@@ -71,8 +71,16 @@ echo 'Plural day of week:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genPluralDayOfWeek')) . PHP_EOL;
 echo PHP_EOL;
 
+echo 'Plural day unit:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genPluralDayUnit')) . PHP_EOL;
+echo PHP_EOL;
+
 echo 'Plural month:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genPluralMonth')) . PHP_EOL;
+echo PHP_EOL;
+
+echo 'Plural time unit:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genPluralTimeUnit')) . PHP_EOL;
 echo PHP_EOL;
 
 echo 'Recurring day unit:' . PHP_EOL;
@@ -120,6 +128,10 @@ echo PHP_EOL;
 
 echo 'Optional frequency:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genOptionalFrequency')) . PHP_EOL;
+echo PHP_EOL;
+
+echo 'Plural repeater:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genPluralRepeater')) . PHP_EOL;
 echo PHP_EOL;
 
 echo 'Repeater:' . PHP_EOL;
