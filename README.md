@@ -15,13 +15,14 @@ into sections.
 
 Tokens are returned by the lexer.
 
--   WORD: Matches any single word composed of alphabetic characters, used to
+-   `WORD`: Matches any single word composed of alphabetic characters, used to
     match literals.
--   DATE: Matches various date formats (e.g., 01/02, 2023-01-02).
--   TIME: Matches time in HH:MM format (e.g., 14:30) or HH:MM:SS.
--   HOUR: Matches hour with AM/PM (e.g., 6pm).
--   ORDINAL: Matches ordinal numbers (e.g., 1st, 2nd, 3rd, 4th).
--   NUMBER: Matches any number.
+-   `DATE`: Matches various date formats (e.g., 01/02, 2023-01-02).
+-   `TIME`: Matches time in HH:MM format (e.g., 14:30) or HH:MM:SS.
+-   `HOUR`: Matches hour with AM/PM (e.g., 6pm).
+-   `ORDINAL`: Matches ordinal numbers (e.g., 1st, 2nd, 3rd, 4th).
+-   `ONE`: Matches the number 1.
+-   `TWO_OR_MORE`: Matches any number 2 or more.
 
 ### Literals
 
@@ -40,11 +41,11 @@ Literals contain only literal strings.
     | "weekday"
     | "weekend"
 
-<day_unit> ::= "day" | "days"
-    | "week" | "weeks"
-    | "month" | "months"
-    | "quarter" | "quarters"
-    | "year" | "years"
+<day_unit> ::= "day"
+    | "week"
+    | "month"
+    | "quarter"
+    | "year"
 
 <month> ::= "January" | "Jan"
     | "February" | "Feb"
@@ -77,6 +78,12 @@ Literals contain only literal strings.
     | "Sundays"
     | "weekdays"
     | "weekends"
+
+<plural_day_unit> ::= "days"
+    | "weeks"
+    | "months"
+    | "quarters"
+    | "years"
 
 <plural_month> ::= "Januaries" | "Januarys"
     | "Februaries" | "Februarys"
@@ -146,11 +153,13 @@ Literals contain only literal strings.
     | <recurring_time>
 
 <datetime_phrase> :== "on" <datetime>
-    | "in" NUMBER <day_unit> <optional_time>
+    | "in" ONE <day_unit> <optional_time>
+    | "in" TWO_OR_MORE <plural_day_unit> <optional_time>
 
 <frequency> ::= "once"
     | "twice"
-    | NUMBER "times"
+    | ONE "time"
+    | TWO_OR_MORE "times"
 
 <optional_frequency> ::= <frequency> | ""
 
@@ -178,7 +187,7 @@ Literals contain only literal strings.
     | <repeater> <time_of_day>
 
 <repeater> :== "every"
-    | "every" NUMBER
+    | "every" TWO_OR_MORE
     | "every" ORDINAL
     | "every" "other"
 

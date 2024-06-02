@@ -26,12 +26,6 @@ namespace DouglasGreen\DateParser;
 
 <datetime> ::= <simple_date> <optional_time>
 
-<simple_time> ::= <clock_time>
-    | <period_part> <time_of_day>
-    | <period_part> <time_unit>
-    | <sequence> <time_of_day>
-    | <sequence> <time_unit>
-
 <simple_date> ::= DATE
     | <day_of_week>
     | <month> NUMBER
@@ -219,7 +213,8 @@ class Generator
     /**
      * <frequency> ::= "once"
      *     | "twice"
-     *     | NUMBER "times"
+     *     | ONE "time"
+     *     | TWO_OR_MORE "times"
      */
     public function genFrequency(): string
     {
@@ -227,7 +222,8 @@ class Generator
         switch ($type) {
             case 0: return 'once';
             case 1: return 'twice';
-            case 2: return $this->genNumber() . ' times';
+            case 2: return $this->genOne() . ' time';
+            case 2: return $this->genTwoOrMore() . ' times';
         }
     }
 
@@ -248,11 +244,11 @@ class Generator
     }
 
     /**
-     * NUMBER: Matches any number.
+     * ONE: Matches the number 1.
      */
-    public function genNumber(): string
+    public function genOne(): string
     {
-        return (string) mt_rand(1, 99);
+        return '1';
     }
 
     /**
@@ -487,7 +483,7 @@ class Generator
 
     /**
      * <repeater> :== "every"
-     *     | "every" NUMBER
+     *     | "every" TWO_OR_MORE
      *     | "every" ORDINAL
      *     | "every" "other"
      */
@@ -496,7 +492,7 @@ class Generator
         $type = mt_rand(0, 3);
         switch ($type) {
             case 0: return 'every';
-            case 1: return 'every ' . $this->genNumber();
+            case 1: return 'every ' . $this->genTwoOrMore();
             case 2: return 'every ' . $this->genOrdinal();
             case 3: return 'every other';
         }
@@ -514,6 +510,25 @@ class Generator
             case 0: return 'last';
             case 1: return 'this';
             case 2: return 'next';
+        }
+    }
+
+    /**
+     * <simple_time> ::= <clock_time>
+     *     | <period_part> <time_of_day>
+     *     | <period_part> <time_unit>
+     *     | <sequence> <time_of_day>
+     *     | <sequence> <time_unit>
+     */
+    public function genSimpleTime(): string
+    {
+        $type = mt_rand(0, 4);
+        switch ($type) {
+            case 0: return $this->genClockTime();
+            case 1: return $this->genPeriodPart() . ' ' . $this->genTimeOfDay();
+            case 2: return $this->genPeriodPart() . ' ' . $this->genTimeUnit();
+            case 3: return $this->genSequence() . ' ' . $this->genTimeOfDay();
+            case 4: return $this->genSequence() . ' ' . $this->genTimeUnit();
         }
     }
 
@@ -602,4 +617,13 @@ class Generator
             case 5: return 'hours';
         }
     }
+
+    /**
+     * TWO_OR_MORE: Matches any number 2 or more.
+     */
+    public function genTwoOrMore(): string
+    {
+        return (string) mt_rand(2, 99);
+    }
+
 }

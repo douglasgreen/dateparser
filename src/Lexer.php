@@ -64,7 +64,9 @@ class Lexer
 
             (?P<ordinal>\\b[1-9]\\d*(st|nd|rd|th)\\b) |
 
-            (?P<number>\\b[1-9]\\d*\\b)
+            (?P<one>\\b1\\b) |
+
+            (?P<twoOrMore>\\b(?:[2-9]|[1-9]\\d+)\\b)
         %isx';
 
         $result = preg_match_all($pattern, $this->input, $matches, PREG_SET_ORDER);
@@ -96,8 +98,10 @@ class Lexer
                 $type = 'hour';
             } elseif (isset($result['ordinal'])) {
                 $type = 'ordinal';
-            } elseif (isset($result['number'])) {
-                $type = 'number';
+            } elseif (isset($result['one'])) {
+                $type = 'one';
+            } elseif (isset($result['twoOrMore'])) {
+                $type = 'twoOrMore';
             } else {
                 throw new RegexException('Unrecognized token type: ' . json_encode($result));
             }

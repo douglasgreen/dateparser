@@ -24,12 +24,16 @@ echo 'Hours:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genHour')) . PHP_EOL;
 echo PHP_EOL;
 
+echo 'One:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genOne')) . PHP_EOL;
+echo PHP_EOL;
+
 echo 'Ordinal:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genOrdinal')) . PHP_EOL;
 echo PHP_EOL;
 
-echo 'Number:' . PHP_EOL;
-echo implode(PHP_EOL, $generator->collect('genNumber')) . PHP_EOL;
+echo 'Two or more:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genTwoOrMore')) . PHP_EOL;
 echo PHP_EOL;
 
 /**
@@ -120,4 +124,8 @@ echo PHP_EOL;
 
 echo 'Repeater:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genRepeater')) . PHP_EOL;
+echo PHP_EOL;
+
+echo 'Simple time:' . PHP_EOL;
+echo implode(PHP_EOL, $generator->collect('genSimpleTime')) . PHP_EOL;
 echo PHP_EOL;
