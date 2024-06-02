@@ -10,12 +10,12 @@ See [Project Setup Guide](docs/setup_guide.md).
 
 ### Tokens
 
-- word: Matches any single word composed of alphabetic characters.
-- day: Matches ordinal numbers (e.g., 1st, 2nd, 3rd, 4th).
-- date: Matches various date formats (e.g., 01/02, 2023-01-02).
-- time: Matches time in HH:MM format (e.g., 14:30).
-- hour: Matches hour with AM/PM (e.g., 6pm).
-- number: Matches any number.
+-   word: Matches any single word composed of alphabetic characters.
+-   day: Matches ordinal numbers (e.g., 1st, 2nd, 3rd, 4th).
+-   date: Matches various date formats (e.g., 01/02, 2023-01-02).
+-   time: Matches time in HH:MM format (e.g., 14:30).
+-   hour: Matches hour with AM/PM (e.g., 6pm).
+-   number: Matches any number.
 
 ### Grammar Rules
 
@@ -32,7 +32,7 @@ Date expressions are described by this context-free grammar.
                 | "on" <day> <optional_time>
                 | "on" <month> <day> <optional_time>
                 | "on" <month> <number> <optional_time>
-                | "on" <number> <month> <optional_time> 
+                | "on" <number> <month> <optional_time>
                 | "on" <day_of_week> <optional_time>
 
 <optional_time> :== <simple_time> | ""
