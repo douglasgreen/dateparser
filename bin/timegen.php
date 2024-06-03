@@ -12,15 +12,15 @@ $generator = new Generator();
 /**
  * Tokens
  */
-echo 'Dates:' . PHP_EOL;
+echo 'Date:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genDate')) . PHP_EOL;
 echo PHP_EOL;
 
-echo 'Times:' . PHP_EOL;
+echo 'Time:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genTime')) . PHP_EOL;
 echo PHP_EOL;
 
-echo 'Hours:' . PHP_EOL;
+echo 'Hour:' . PHP_EOL;
 echo implode(PHP_EOL, $generator->collect('genHour')) . PHP_EOL;
 echo PHP_EOL;
 

@@ -58,6 +58,7 @@ class Lexer
 
             (?P<date>\\b(?:\\d\\d(?:\\d\\d)?[/-])?\\d\\d?[/-]\\d\\d?) |
 
+            # Time is HH:MM or HH:MM:SS to distinguish from other numbers.
             (?P<time>(?:0?[0-9]|1[0-9]|2[0-3]):[0-5]\\d(?::[0-5]\\d)?\\b) |
 
             (?P<hour>\\b(?:[1-9]|1[012])(?:am|pm)\\b) |
