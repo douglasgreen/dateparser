@@ -46,8 +46,10 @@ class Generator
     {
         $type = mt_rand(0, 1);
         switch ($type) {
-            case 0: return 'before';
-            case 1: return 'after';
+            case 0:
+                return 'before';
+            case 1:
+                return 'after';
         }
     }
 
@@ -61,10 +63,14 @@ class Generator
     {
         $type = mt_rand(0, 3);
         switch ($type) {
-            case 0: return $this->genTime();
-            case 1: return $this->genTime() . ' AM';
-            case 2: return $this->genTime() . ' PM';
-            case 3: return $this->genHour();
+            case 0:
+                return $this->genTime();
+            case 1:
+                return $this->genTime() . ' AM';
+            case 2:
+                return $this->genTime() . ' PM';
+            case 3:
+                return $this->genHour();
         }
     }
 
@@ -85,17 +91,28 @@ class Generator
     {
         $type = mt_rand(0, 10);
         switch ($type) {
-            case 0: return $this->genDayUnitCount() . ' ago';
-            case 1: return $this->genDayUnitCount() . ' from now';
-            case 2: return $this->genOrdinal() . ' ' . $this->genMonth();
-            case 3: return $this->genPeriodPart() . ' ' . $this->genDayOfWeek();
-            case 4: return $this->genPeriodPart() . ' ' . $this->genDayUnit();
-            case 5: return $this->genPeriodPart() . ' ' . $this->genMonth();
-            case 6: return $this->genPeriodPart() . ' ' . $this->genRelativeDay();
-            case 7: return $this->genRelativeDay();
-            case 8: return $this->genSequence() . ' ' . $this->genDayOfWeek();
-            case 9: return $this->genSequence() . ' ' . $this->genDayUnit();
-            case 10: return $this->genSequence() . ' ' . $this->genMonth();
+            case 0:
+                return $this->genDayUnitCount() . ' ago';
+            case 1:
+                return $this->genDayUnitCount() . ' from now';
+            case 2:
+                return $this->genOrdinal() . ' ' . $this->genMonth();
+            case 3:
+                return $this->genPeriodPart() . ' ' . $this->genDayOfWeek();
+            case 4:
+                return $this->genPeriodPart() . ' ' . $this->genDayUnit();
+            case 5:
+                return $this->genPeriodPart() . ' ' . $this->genMonth();
+            case 6:
+                return $this->genPeriodPart() . ' ' . $this->genRelativeDay();
+            case 7:
+                return $this->genRelativeDay();
+            case 8:
+                return $this->genSequence() . ' ' . $this->genDayOfWeek();
+            case 9:
+                return $this->genSequence() . ' ' . $this->genDayUnit();
+            case 10:
+                return $this->genSequence() . ' ' . $this->genMonth();
         }
     }
 
@@ -137,8 +154,10 @@ class Generator
     {
         $type = mt_rand(0, 1);
         switch ($type) {
-            case 0: return $this->genSimpleDate();
-            case 1: return $this->genComplexDate();
+            case 0:
+                return $this->genSimpleDate();
+            case 1:
+                return $this->genComplexDate();
         }
     }
 
@@ -152,10 +171,14 @@ class Generator
     {
         $type = mt_rand(0, 3);
         switch ($type) {
-            case 0: return $this->genStartingOrEnding() . ' ' . $this->genSimpleDate();
-            case 1: return 'for ' . $this->genDayUnitCount();
-            case 2: return 'between ' . $this->genSimpleDate() . ' and ' . $this->genSimpleDate();
-            case 3: return 'from ' . $this->genSimpleDate() . ' until ' . $this->genSimpleDate();
+            case 0:
+                return $this->genStartingOrEnding() . ' ' . $this->genSimpleDate();
+            case 1:
+                return 'for ' . $this->genDayUnitCount();
+            case 2:
+                return 'between ' . $this->genSimpleDate() . ' and ' . $this->genSimpleDate();
+            case 3:
+                return 'from ' . $this->genSimpleDate() . ' until ' . $this->genSimpleDate();
         }
     }
 
@@ -175,16 +198,26 @@ class Generator
     {
         $type = mt_rand(0, 9);
         switch ($type) {
-            case 0: return $this->genOptionalFrequency() . ' ' . $this->genRecurringDayUnit();
-            case 1: return $this->genPluralDayOfWeek();
-            case 2: return $this->genPluralMonth();
-            case 3: return $this->genPluralRepeater() . ' ' . $this->genPluralDayOfWeek();
-            case 4: return $this->genPluralRepeater() . ' ' . $this->genPluralDayUnit();
-            case 5: return $this->genPluralRepeater() . ' ' . $this->genPluralMonth();
-            case 6: return $this->genRepeater() . ' ' . $this->genDayOfWeek();
-            case 7: return $this->genRepeater() . ' ' . $this->genDayUnit();
-            case 8: return $this->genRepeater() . ' ' . $this->genMonth();
-            case 9: return $this->genRepeater() . ' ' . $this->genOrdinal();
+            case 0:
+                return $this->genOptionalFrequency() . ' ' . $this->genRecurringDayUnit();
+            case 1:
+                return $this->genPluralDayOfWeek();
+            case 2:
+                return $this->genPluralMonth();
+            case 3:
+                return $this->genPluralRepeater() . ' ' . $this->genPluralDayOfWeek();
+            case 4:
+                return $this->genPluralRepeater() . ' ' . $this->genPluralDayUnit();
+            case 5:
+                return $this->genPluralRepeater() . ' ' . $this->genPluralMonth();
+            case 6:
+                return $this->genRepeater() . ' ' . $this->genDayOfWeek();
+            case 7:
+                return $this->genRepeater() . ' ' . $this->genDayUnit();
+            case 8:
+                return $this->genRepeater() . ' ' . $this->genMonth();
+            case 9:
+                return $this->genRepeater() . ' ' . $this->genOrdinal();
         }
     }
 
@@ -209,13 +242,20 @@ class Generator
     {
         $type = mt_rand(0, 6);
         switch ($type) {
-            case 0: return $this->genDatetime();
-            case 1: return $this->genDatetimePhrase();
-            case 2: return $this->genRecurringDate();
-            case 3: return $this->genRecurringTime();
-            case 4: return $this->genRelativeTimePhrase();
-            case 5: return $this->genSimpleTime();
-            case 6: return $this->genTimePhrase();
+            case 0:
+                return $this->genDatetime();
+            case 1:
+                return $this->genDatetimePhrase();
+            case 2:
+                return $this->genRecurringDate();
+            case 3:
+                return $this->genRecurringTime();
+            case 4:
+                return $this->genRelativeTimePhrase();
+            case 5:
+                return $this->genSimpleTime();
+            case 6:
+                return $this->genTimePhrase();
         }
     }
 
@@ -227,8 +267,10 @@ class Generator
     {
         $type = mt_rand(0, 1);
         switch ($type) {
-            case 0: return 'on ' . $this->genSimpleDate() . ' ' . $this->genOptionalTime();
-            case 1: return 'in ' . $this->genDayUnitCount() . ' ' . $this->genOptionalTime();
+            case 0:
+                return 'on ' . $this->genSimpleDate() . ' ' . $this->genOptionalTime();
+            case 1:
+                return 'in ' . $this->genDayUnitCount() . ' ' . $this->genOptionalTime();
         }
     }
 
@@ -247,22 +289,38 @@ class Generator
     {
         $type = mt_rand(0, 15);
         switch ($type) {
-            case 0: return 'Monday';
-            case 1: return 'Mon';
-            case 2: return 'Tuesday';
-            case 3: return 'Tue';
-            case 4: return 'Wednesday';
-            case 5: return 'Wed';
-            case 6: return 'Thursday';
-            case 7: return 'Thu';
-            case 8: return 'Friday';
-            case 9: return 'Fri';
-            case 10: return 'Saturday';
-            case 11: return 'Sat';
-            case 12: return 'Sunday';
-            case 13: return 'Sun';
-            case 14: return 'weekday';
-            case 15: return 'weekend';
+            case 0:
+                return 'Monday';
+            case 1:
+                return 'Mon';
+            case 2:
+                return 'Tuesday';
+            case 3:
+                return 'Tue';
+            case 4:
+                return 'Wednesday';
+            case 5:
+                return 'Wed';
+            case 6:
+                return 'Thursday';
+            case 7:
+                return 'Thu';
+            case 8:
+                return 'Friday';
+            case 9:
+                return 'Fri';
+            case 10:
+                return 'Saturday';
+            case 11:
+                return 'Sat';
+            case 12:
+                return 'Sunday';
+            case 13:
+                return 'Sun';
+            case 14:
+                return 'weekday';
+            case 15:
+                return 'weekend';
         }
     }
 
@@ -277,11 +335,16 @@ class Generator
     {
         $type = mt_rand(0, 4);
         switch ($type) {
-            case 0: return 'day';
-            case 1: return 'week';
-            case 2: return 'month';
-            case 3: return 'quarter';
-            case 4: return 'year';
+            case 0:
+                return 'day';
+            case 1:
+                return 'week';
+            case 2:
+                return 'month';
+            case 3:
+                return 'quarter';
+            case 4:
+                return 'year';
         }
     }
 
@@ -293,8 +356,10 @@ class Generator
     {
         $type = mt_rand(0, 1);
         switch ($type) {
-            case 0: return $this->genOne() . ' ' . $this->genDayUnit();
-            case 1: return $this->genTwoOrMore() . ' ' . $this->genPluralDayUnit();
+            case 0:
+                return $this->genOne() . ' ' . $this->genDayUnit();
+            case 1:
+                return $this->genTwoOrMore() . ' ' . $this->genPluralDayUnit();
         }
     }
 
@@ -308,10 +373,14 @@ class Generator
     {
         $type = mt_rand(0, 2);
         switch ($type) {
-            case 0: return 'once';
-            case 1: return 'twice';
-            case 2: return $this->genOne() . ' time';
-            case 2: return $this->genTwoOrMore() . ' times';
+            case 0:
+                return 'once';
+            case 1:
+                return 'twice';
+            case 2:
+                return $this->genOne() . ' time';
+            case 2:
+                return $this->genTwoOrMore() . ' times';
         }
     }
 
@@ -349,29 +418,52 @@ class Generator
     {
         $type = mt_rand(0, 22);
         switch ($type) {
-            case 0: return 'January';
-            case 1: return 'Jan';
-            case 2: return 'February';
-            case 3: return 'Feb';
-            case 4: return 'March';
-            case 5: return 'Mar';
-            case 6: return 'April';
-            case 7: return 'Apr';
-            case 8: return 'May';
-            case 9: return 'June';
-            case 10: return 'Jun';
-            case 11: return 'July';
-            case 12: return 'Jul';
-            case 13: return 'August';
-            case 14: return 'Aug';
-            case 15: return 'September';
-            case 16: return 'Sep';
-            case 17: return 'October';
-            case 18: return 'Oct';
-            case 19: return 'November';
-            case 20: return 'Nov';
-            case 21: return 'December';
-            case 22: return 'Dec';
+            case 0:
+                return 'January';
+            case 1:
+                return 'Jan';
+            case 2:
+                return 'February';
+            case 3:
+                return 'Feb';
+            case 4:
+                return 'March';
+            case 5:
+                return 'Mar';
+            case 6:
+                return 'April';
+            case 7:
+                return 'Apr';
+            case 8:
+                return 'May';
+            case 9:
+                return 'June';
+            case 10:
+                return 'Jun';
+            case 11:
+                return 'July';
+            case 12:
+                return 'Jul';
+            case 13:
+                return 'August';
+            case 14:
+                return 'Aug';
+            case 15:
+                return 'September';
+            case 16:
+                return 'Sep';
+            case 17:
+                return 'October';
+            case 18:
+                return 'Oct';
+            case 19:
+                return 'November';
+            case 20:
+                return 'Nov';
+            case 21:
+                return 'December';
+            case 22:
+                return 'Dec';
         }
     }
 
@@ -390,8 +482,10 @@ class Generator
     {
         $type = mt_rand(0, 1);
         switch ($type) {
-            case 0: return $this->genDateRepeatLimit();
-            case 1: return '""';
+            case 0:
+                return $this->genDateRepeatLimit();
+            case 1:
+                return '""';
         }
     }
 
@@ -402,8 +496,10 @@ class Generator
     {
         $type = mt_rand(0, 1);
         switch ($type) {
-            case 0: return $this->genFrequency();
-            case 1: return '""';
+            case 0:
+                return $this->genFrequency();
+            case 1:
+                return '""';
         }
     }
 
@@ -414,8 +510,10 @@ class Generator
     {
         $type = mt_rand(0, 1);
         switch ($type) {
-            case 0: return $this->genPeriodPart();
-            case 1: return '""';
+            case 0:
+                return $this->genPeriodPart();
+            case 1:
+                return '""';
         }
     }
 
@@ -426,8 +524,10 @@ class Generator
     {
         $type = mt_rand(0, 1);
         switch ($type) {
-            case 0: return $this->genSequence();
-            case 1: return '""';
+            case 0:
+                return $this->genSequence();
+            case 1:
+                return '""';
         }
     }
 
@@ -440,9 +540,12 @@ class Generator
     {
         $type = mt_rand(0, 2);
         switch ($type) {
-            case 0: return $this->genSimpleTime();
-            case 1: return $this->genTimePhrase();
-            case 2: return '""';
+            case 0:
+                return $this->genSimpleTime();
+            case 1:
+                return $this->genTimePhrase();
+            case 2:
+                return '""';
         }
     }
 
@@ -476,10 +579,14 @@ class Generator
     {
         $type = mt_rand(0, 3);
         switch ($type) {
-            case 0: return 'early';
-            case 1: return 'mid';
-            case 2: return 'middle';
-            case 3: return 'late';
+            case 0:
+                return 'early';
+            case 1:
+                return 'mid';
+            case 2:
+                return 'middle';
+            case 3:
+                return 'late';
         }
     }
 
@@ -498,15 +605,24 @@ class Generator
     {
         $type = mt_rand(0, 8);
         switch ($type) {
-            case 0: return 'Mondays';
-            case 1: return 'Tuesdays';
-            case 2: return 'Wednesdays';
-            case 3: return 'Thursdays';
-            case 4: return 'Fridays';
-            case 5: return 'Saturdays';
-            case 6: return 'Sundays';
-            case 7: return 'weekdays';
-            case 8: return 'weekends';
+            case 0:
+                return 'Mondays';
+            case 1:
+                return 'Tuesdays';
+            case 2:
+                return 'Wednesdays';
+            case 3:
+                return 'Thursdays';
+            case 4:
+                return 'Fridays';
+            case 5:
+                return 'Saturdays';
+            case 6:
+                return 'Sundays';
+            case 7:
+                return 'weekdays';
+            case 8:
+                return 'weekends';
         }
     }
 
@@ -521,11 +637,16 @@ class Generator
     {
         $type = mt_rand(0, 4);
         switch ($type) {
-            case 0: return 'days';
-            case 1: return 'weeks';
-            case 2: return 'months';
-            case 3: return 'quarters';
-            case 4: return 'years';
+            case 0:
+                return 'days';
+            case 1:
+                return 'weeks';
+            case 2:
+                return 'months';
+            case 3:
+                return 'quarters';
+            case 4:
+                return 'years';
         }
     }
 
@@ -547,21 +668,36 @@ class Generator
     {
         $type = mt_rand(0, 14);
         switch ($type) {
-            case 0: return 'Januaries';
-            case 1: return 'Januarys';
-            case 2: return 'Februaries';
-            case 3: return 'Februarys';
-            case 4: return 'Marches';
-            case 5: return 'Aprils';
-            case 6: return 'Mays';
-            case 7: return 'Junes';
-            case 8: return 'Julies';
-            case 9: return 'Julys';
-            case 10: return 'Augusts';
-            case 11: return 'Septembers';
-            case 12: return 'Octobers';
-            case 13: return 'Novembers';
-            case 14: return 'Decembers';
+            case 0:
+                return 'Januaries';
+            case 1:
+                return 'Januarys';
+            case 2:
+                return 'Februaries';
+            case 3:
+                return 'Februarys';
+            case 4:
+                return 'Marches';
+            case 5:
+                return 'Aprils';
+            case 6:
+                return 'Mays';
+            case 7:
+                return 'Junes';
+            case 8:
+                return 'Julies';
+            case 9:
+                return 'Julys';
+            case 10:
+                return 'Augusts';
+            case 11:
+                return 'Septembers';
+            case 12:
+                return 'Octobers';
+            case 13:
+                return 'Novembers';
+            case 14:
+                return 'Decembers';
         }
     }
 
@@ -582,9 +718,12 @@ class Generator
     {
         $type = mt_rand(0, 2);
         switch ($type) {
-            case 0: return 'seconds';
-            case 1: return 'minutes';
-            case 2: return 'hours';
+            case 0:
+                return 'seconds';
+            case 1:
+                return 'minutes';
+            case 2:
+                return 'hours';
         }
     }
 
@@ -607,12 +746,18 @@ class Generator
     {
         $type = mt_rand(0, 5);
         switch ($type) {
-            case 0: return 'daily';
-            case 1: return 'weekly';
-            case 2: return 'monthly';
-            case 3: return 'quarterly';
-            case 4: return 'yearly';
-            case 5: return 'annually';
+            case 0:
+                return 'daily';
+            case 1:
+                return 'weekly';
+            case 2:
+                return 'monthly';
+            case 3:
+                return 'quarterly';
+            case 4:
+                return 'yearly';
+            case 5:
+                return 'annually';
         }
     }
 
@@ -624,8 +769,10 @@ class Generator
     {
         $type = mt_rand(0, 1);
         switch ($type) {
-            case 0: return $this->genOptionalFrequency() . ' ' . $this->genRecurringTimeUnit();
-            case 1: return $this->genRepeater() . ' ' . $this->genTimeOfDay();
+            case 0:
+                return $this->genOptionalFrequency() . ' ' . $this->genRecurringTimeUnit();
+            case 1:
+                return $this->genRepeater() . ' ' . $this->genTimeOfDay();
         }
     }
 
@@ -639,10 +786,14 @@ class Generator
     {
         $type = mt_rand(0, 3);
         switch ($type) {
-            case 0: return 'per second';
-            case 1: return 'per minute';
-            case 2: return 'per hour';
-            case 3: return 'hourly';
+            case 0:
+                return 'per second';
+            case 1:
+                return 'per minute';
+            case 2:
+                return 'per hour';
+            case 3:
+                return 'hourly';
         }
     }
 
@@ -655,9 +806,12 @@ class Generator
     {
         $type = mt_rand(0, 2);
         switch ($type) {
-            case 0: return 'yesterday';
-            case 1: return 'today';
-            case 2: return 'tomorrow';
+            case 0:
+                return 'yesterday';
+            case 1:
+                return 'today';
+            case 2:
+                return 'tomorrow';
         }
     }
 
@@ -671,10 +825,14 @@ class Generator
     {
         $type = mt_rand(0, 3);
         switch ($type) {
-            case 0: return 'in ' . $this->genOne() . ' ' . $this->genTimeUnit();
-            case 1: return 'in ' . $this->genTwoOrMore() . ' ' . $this->genPluralTimeUnit();
-            case 2: return $this->genSequence() . ' ' . $this->genTimeOfDay();
-            case 3: return $this->genSequence() . ' ' . $this->genTimeUnit();
+            case 0:
+                return 'in ' . $this->genOne() . ' ' . $this->genTimeUnit();
+            case 1:
+                return 'in ' . $this->genTwoOrMore() . ' ' . $this->genPluralTimeUnit();
+            case 2:
+                return $this->genSequence() . ' ' . $this->genTimeOfDay();
+            case 3:
+                return $this->genSequence() . ' ' . $this->genTimeUnit();
         }
     }
 
@@ -687,9 +845,12 @@ class Generator
     {
         $type = mt_rand(0, 2);
         switch ($type) {
-            case 0: return 'every';
-            case 1: return 'every ' . $this->genOrdinal();
-            case 2: return 'every other';
+            case 0:
+                return 'every';
+            case 1:
+                return 'every ' . $this->genOrdinal();
+            case 2:
+                return 'every other';
         }
     }
 
@@ -702,9 +863,12 @@ class Generator
     {
         $type = mt_rand(0, 2);
         switch ($type) {
-            case 0: return 'last';
-            case 1: return 'this';
-            case 2: return 'next';
+            case 0:
+                return 'last';
+            case 1:
+                return 'this';
+            case 2:
+                return 'next';
         }
     }
 
@@ -723,13 +887,20 @@ class Generator
         $month = $this->genMonth();
         $daysInMonth = $this->getDaysInMonth($month);
         switch ($type) {
-            case 0: return $this->genDate();
-            case 1: return $this->genDayOfWeek();
-            case 2: return $month . ' ' . $this->genOne();
-            case 3: return $month . ' ' . $this->genOrdinal($daysInMonth);
-            case 4: return $month . ' ' . $this->genTwoOrMore($daysInMonth);
-            case 5: return $this->genOrdinal(31);
-            case 6: return $this->genOrdinal() . ' ' . $this->genDayOfWeek();
+            case 0:
+                return $this->genDate();
+            case 1:
+                return $this->genDayOfWeek();
+            case 2:
+                return $month . ' ' . $this->genOne();
+            case 3:
+                return $month . ' ' . $this->genOrdinal($daysInMonth);
+            case 4:
+                return $month . ' ' . $this->genTwoOrMore($daysInMonth);
+            case 5:
+                return $this->genOrdinal(31);
+            case 6:
+                return $this->genOrdinal() . ' ' . $this->genDayOfWeek();
         }
     }
 
@@ -741,8 +912,10 @@ class Generator
     {
         $type = mt_rand(0, 1);
         switch ($type) {
-            case 0: return $this->genClockTime();
-            case 1: return $this->genPeriodPart() . ' ' . $this->genTimePeriodOfDay();
+            case 0:
+                return $this->genClockTime();
+            case 1:
+                return $this->genPeriodPart() . ' ' . $this->genTimePeriodOfDay();
         }
     }
 
@@ -753,8 +926,10 @@ class Generator
     {
         $type = mt_rand(0, 1);
         switch ($type) {
-            case 0: return 'start';
-            case 1: return 'end';
+            case 0:
+                return 'start';
+            case 1:
+                return 'end';
         }
     }
 
@@ -768,10 +943,14 @@ class Generator
     {
         $type = mt_rand(0, 3);
         switch ($type) {
-            case 0: return 'starting';
-            case 1: return 'ending';
-            case 2: return 'since';
-            case 3: return 'until';
+            case 0:
+                return 'starting';
+            case 1:
+                return 'ending';
+            case 2:
+                return 'since';
+            case 3:
+                return 'until';
         }
     }
 
@@ -801,8 +980,10 @@ class Generator
     {
         $type = mt_rand(0, 1);
         switch ($type) {
-            case 0: return $this->genTimePeriodOfDay();
-            case 1: return $this->genTimePointOfDay();
+            case 0:
+                return $this->genTimePeriodOfDay();
+            case 1:
+                return $this->genTimePointOfDay();
         }
     }
 
@@ -816,10 +997,14 @@ class Generator
     {
         $type = mt_rand(0, 3);
         switch ($type) {
-            case 0: return 'morning';
-            case 1: return 'afternoon';
-            case 2: return 'evening';
-            case 3: return 'night';
+            case 0:
+                return 'morning';
+            case 1:
+                return 'afternoon';
+            case 2:
+                return 'evening';
+            case 3:
+                return 'night';
         }
     }
 
@@ -831,8 +1016,10 @@ class Generator
     {
         $type = mt_rand(0, 1);
         switch ($type) {
-            case 0: return 'noon';
-            case 1: return 'midnight';
+            case 0:
+                return 'noon';
+            case 1:
+                return 'midnight';
         }
     }
 
@@ -845,9 +1032,12 @@ class Generator
     {
         $type = mt_rand(0, 2);
         switch ($type) {
-            case 0: return 'at ' . $this->genClockTime();
-            case 1: return 'at ' . $this->genTimePointOfDay();
-            case 2: return 'in ' . $this->genTimePeriodOfDay();
+            case 0:
+                return 'at ' . $this->genClockTime();
+            case 1:
+                return 'at ' . $this->genTimePointOfDay();
+            case 2:
+                return 'in ' . $this->genTimePeriodOfDay();
         }
     }
 
@@ -860,9 +1050,12 @@ class Generator
     {
         $type = mt_rand(0, 2);
         switch ($type) {
-            case 0: return 'second';
-            case 1: return 'minute';
-            case 2: return 'hour';
+            case 0:
+                return 'second';
+            case 1:
+                return 'minute';
+            case 2:
+                return 'hour';
         }
     }
 
@@ -899,10 +1092,12 @@ class Generator
             case 'October':
             case 'Oct':
             case 'December':
-            case 'Dec': return 31;
+            case 'Dec':
+                return 31;
             case 2:
             case 'February':
-            case 'Feb': return 29;
+            case 'Feb':
+                return 29;
             case 4:
             case 6:
             case 9:
@@ -914,8 +1109,10 @@ class Generator
             case 'September':
             case 'Sep':
             case 'November':
-            case 'Nov': return 30;
-            default: throw new ValueException('Unknown month: ' . $month);
+            case 'Nov':
+                return 30;
+            default:
+                throw new ValueException('Unknown month: ' . $month);
         }
     }
 }

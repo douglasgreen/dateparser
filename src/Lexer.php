@@ -81,7 +81,7 @@ class Lexer
             $result = array_filter(
                 $match,
                 static fn($value, $key): bool => ! is_numeric($key) && strlen($value) > 0,
-                ARRAY_FILTER_USE_BOTH
+                ARRAY_FILTER_USE_BOTH,
             );
 
             if (isset($result['word'])) {

@@ -3,24 +3,24 @@
 A PHP library to parse dates, times, and recurring date expressions.
 
 This library is a replacement for the PHP
-[`strtotime()`](https://www.php.net/manual/en/function.strtotime.php) function
-that parses more date types, including date periods and recurring dates.
+[`strtotime()`](https://www.php.net/manual/en/function.strtotime.php) function that parses more date
+types, including date periods and recurring dates.
 
-## Setup
+## Project setup
 
-See [Project Setup Guide](docs/setup_guide.md).
+Standard config files for linting and testing are copied into place from a GitHub repository called
+[config-setup](https://github.com/douglasgreen/config-setup). See that project's README page for
+details.
 
 ## Grammar Rules
 
-Date expressions are described by this context-free grammar. It is broken down
-into sections.
+Date expressions are described by this context-free grammar. It is broken down into sections.
 
 ### Tokens
 
 Tokens are returned by the lexer.
 
--   `WORD`: Matches any single word composed of alphabetic characters, used to
-    match literals.
+-   `WORD`: Matches any single word composed of alphabetic characters, used to match literals.
 -   `DATE`: Matches various date formats (e.g., 01/02, 2023-01-02).
 -   `TIME`: Matches time in HH:MM format (e.g., 14:30) or HH:MM:SS.
 -   `HOUR`: Matches hour with AM/PM (e.g., 6pm).
@@ -250,27 +250,24 @@ Literals contain only literal strings.
 
 ### Notes
 
-The lexer skips articles (a, an, and the) and the word "of" so you can write
-dates in the form "the next month" and it will be interpreted as "next month".
+The lexer skips articles (a, an, and the) and the word "of" so you can write dates in the form "the
+next month" and it will be interpreted as "next month".
 
-Dates are always in year, month, day order. So 2024-12-01, 12-01, and 2024
-January 1 are all valid but 2024-01-12, 01-12, and 1 January 2024 are not valid.
+Dates are always in year, month, day order. So 2024-12-01, 12-01, and 2024 January 1 are all valid
+but 2024-01-12, 01-12, and 1 January 2024 are not valid.
 
-Any token named "date" only refers to dates and not times. Any token named
-"time" only refers to times and not dates. Any token named "datetime" refers to
-a date and/or a time.
+Any token named "date" only refers to dates and not times. Any token named "time" only refers to
+times and not dates. Any token named "datetime" refers to a date and/or a time.
 
-Any token named "phrase" always starts with a literal preposition like "at,
-"in", or "on".
+Any token named "phrase" always starts with a literal preposition like "at, "in", or "on".
 
-TIME by itself is a 24-hour clock, of hours, minutes, and optionally seconds.
-<clock_time> allows for the English clock usage of AM and PM. HOUR is just a
-different way of writing whole hours as a combined word, like 8am but not
-8:30am.
+TIME by itself is a 24-hour clock, of hours, minutes, and optionally seconds. <clock_time> allows
+for the English clock usage of AM and PM. HOUR is just a different way of writing whole hours as a
+combined word, like 8am but not 8:30am.
 
 Instead of "semiweekly" use "twice weekly" and so on for the other time units.
 
 Instead of "biweekly" use "every other week" and so on for the other time units.
 
-Literal strings are case insensitive so you can write them with or without
-capital letters, like AM or Am or am.
+Literal strings are case insensitive so you can write them with or without capital letters, like AM
+or Am or am.
