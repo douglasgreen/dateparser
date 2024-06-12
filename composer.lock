@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d03a9ea4fa06022ade1d39d0f0b5b987",
+    "content-hash": "5d2ddd5517e93265aed1462669b7b622",
     "packages": [],
     "packages-dev": [
         {
@@ -221,6 +221,69 @@
                 "issues": "https://github.com/douglasgreen/config-setup/issues"
             },
             "time": "2024-06-12T22:16:44+00:00"
+        },
+        {
+            "name": "douglasgreen/utility",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/douglasgreen/utility.git",
+                "reference": "2389282bcfa2eec71e3e861461328e8f3b70f99e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/douglasgreen/utility/zipball/2389282bcfa2eec71e3e861461328e8f3b70f99e",
+                "reference": "2389282bcfa2eec71e3e861461328e8f3b70f99e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "douglasgreen/config-setup": "dev-main",
+                "phpmd/phpmd": "^2.15",
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^10.5",
+                "phpunitgen/console": "^6.1",
+                "rector/rector": "^1.0",
+                "symplify/easy-coding-standard": "^12.2"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DouglasGreen\\Utility\\": "src/",
+                    "DouglasGreen\\Utility\\Tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Douglas Green",
+                    "email": "douglas@nurd.site",
+                    "homepage": "https://nurd.site/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A PHP utility project for exception classes and wrapper functions",
+            "homepage": "https://github.com/douglasgreen/utility",
+            "keywords": [
+                "directory",
+                "exceptions",
+                "file",
+                "php",
+                "regex",
+                "utility",
+                "wrapper"
+            ],
+            "support": {
+                "issues": "https://github.com/douglasgreen/utility/issues",
+                "source": "https://github.com/douglasgreen/utility/tree/main"
+            },
+            "time": "2024-06-12T13:48:09+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -2883,7 +2946,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "douglasgreen/config-setup": 20
+        "douglasgreen/config-setup": 20,
+        "douglasgreen/utility": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

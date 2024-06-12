@@ -27,6 +27,9 @@ class Parser
         return new SyntaxTree($nodes);
     }
 
+    /**
+     * @throws ParseException
+     */
     protected function eat(string $tokenType, string|array $value = null): void
     {
         if (! $this->currentToken instanceof Token) {
@@ -63,6 +66,9 @@ class Parser
         $this->currentToken = $this->lexer->getNextToken();
     }
 
+    /**
+     * @throws ParseException
+     */
     protected function parseDateExpression(): DateExpression
     {
         if ($this->currentToken->type === 'date') {
@@ -82,18 +88,18 @@ class Parser
         );
     }
 
-    protected function parseSimpleDate(): SimpleDate
+    protected function parseRecurringDate(): RecurringDate
     {
-        if ($this->currentToken->type === 'date') {
-            $date = $this->currentToken->value;
-            $this->eat('date');
-            return new SimpleDate($date);
+        // Example: "every 3 days", "every Monday", "every 2 weeks starting Jan 3"
+        $recurringExpression = '';
+        $this->eat('word', 'every'); // eat 'every'
+
+        while ($this->currentToken instanceof Token) {
+            $recurringExpression .= $this->currentToken->value . ' ';
+            $this->eat($this->currentToken->type);
         }
 
-        // Additional rules for simple dates (e.g., "13th", "Jan 13")
-        throw new ParseException(
-            'Unexpected token in simple date: ' . json_encode($this->currentToken),
-        );
+        return new RecurringDate(trim($recurringExpression));
     }
 
     protected function parseRelativeDate(): RelativeDate
@@ -115,17 +121,20 @@ class Parser
         return new RelativeDate(trim($relativeExpression));
     }
 
-    protected function parseRecurringDate(): RecurringDate
+    /**
+     * @throws ParseException
+     */
+    protected function parseSimpleDate(): SimpleDate
     {
-        // Example: "every 3 days", "every Monday", "every 2 weeks starting Jan 3"
-        $recurringExpression = '';
-        $this->eat('word', 'every'); // eat 'every'
-
-        while ($this->currentToken instanceof Token) {
-            $recurringExpression .= $this->currentToken->value . ' ';
-            $this->eat($this->currentToken->type);
+        if ($this->currentToken->type === 'date') {
+            $date = $this->currentToken->value;
+            $this->eat('date');
+            return new SimpleDate($date);
         }
 
-        return new RecurringDate(trim($recurringExpression));
+        // Additional rules for simple dates (e.g., "13th", "Jan 13")
+        throw new ParseException(
+            'Unexpected token in simple date: ' . json_encode($this->currentToken),
+        );
     }
 }

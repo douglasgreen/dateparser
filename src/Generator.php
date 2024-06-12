@@ -13,11 +13,7 @@ use DouglasGreen\Exceptions\ValueException;
  */
 
 /**
- * @SuppressWarnings(PHPMD.ExcessivePublicCount)
- * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
- * @SuppressWarnings(PHPMD.TooManyMethods)
- * @SuppressWarnings(PHPMD.CyclomaticComplexity)
  */
 class Generator
 {
@@ -1009,21 +1005,6 @@ class Generator
     }
 
     /**
-     * <time_point_of_day> ::= "noon"
-     *     | "midnight"
-     */
-    public function genTimePointOfDay(): string
-    {
-        $type = mt_rand(0, 1);
-        switch ($type) {
-            case 0:
-                return 'noon';
-            case 1:
-                return 'midnight';
-        }
-    }
-
-    /**
      * <time_phrase> ::= "at" <clock_time>
      *     | "at" <time_point_of_day>
      *     | "in" <time_period_of_day>
@@ -1038,6 +1019,21 @@ class Generator
                 return 'at ' . $this->genTimePointOfDay();
             case 2:
                 return 'in ' . $this->genTimePeriodOfDay();
+        }
+    }
+
+    /**
+     * <time_point_of_day> ::= "noon"
+     *     | "midnight"
+     */
+    public function genTimePointOfDay(): string
+    {
+        $type = mt_rand(0, 1);
+        switch ($type) {
+            case 0:
+                return 'noon';
+            case 1:
+                return 'midnight';
         }
     }
 
