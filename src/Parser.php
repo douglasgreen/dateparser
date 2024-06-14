@@ -10,6 +10,9 @@ class Parser
 {
     protected ?Token $currentToken;
 
+    /**
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     */
     public function __construct(
         protected Lexer $lexer,
         protected bool $isVerbose = false

@@ -15,6 +15,9 @@ class Lexer
 
     protected int $position = 0;
 
+    /**
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     */
     public function __construct(
         protected string $input,
         protected bool $isVerbose = false
@@ -112,7 +115,7 @@ class Lexer
 
             if ($this->isVerbose) {
                 echo sprintf('Token: %s, Value: ', $type);
-                $parts = Regex::doSplit('/\R/', $value, -1, Regex::NO_EMPTY);
+                $parts = Regex::split('/\R/', $value, -1, Regex::NO_EMPTY);
                 echo implode(' ', $parts) . PHP_EOL;
             }
         }
