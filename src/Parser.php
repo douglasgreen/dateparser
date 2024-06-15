@@ -31,6 +31,7 @@ class Parser
     }
 
     /**
+     * @param list<string> $value
      * @throws ParseException
      */
     protected function eat(string $tokenType, string|array $value = null): void

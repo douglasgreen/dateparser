@@ -359,6 +359,9 @@ class LexerTest extends TestCase
         yield ['yearly', [new Token('word', 'yearly')]];
     }
 
+    /**
+     * @param array<string, list<Token>> $expected
+     */
     #[DataProvider('dateProvider')]
     public function testDateParsing(string $input, array $expected): void
     {

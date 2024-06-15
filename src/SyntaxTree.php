@@ -7,9 +7,9 @@ namespace DouglasGreen\DateParser;
 class SyntaxTree
 {
     /**
-     * @param list<Statement> $statements
+     * @param list<DateExpression> $dateExpressions
      */
     public function __construct(
-        public array $statements
+        public array $dateExpressions
     ) {}
 }
