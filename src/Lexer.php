@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DouglasGreen\DateParser;
 
 use DouglasGreen\Utility\Regex\Regex;
+use DouglasGreen\Utility\Data\ValueException;
 
 class Lexer
 {
@@ -51,7 +52,7 @@ class Lexer
     }
 
     /**
-     * @throws RegexException
+     * @throws ValueException
      */
     protected function tokenize(): void
     {
@@ -73,12 +74,7 @@ class Lexer
             (?P<twoOrMore>\\b(?:[2-9]|[1-9]\\d+)\\b)
         %isx';
 
-        $result = preg_match_all($pattern, $this->input, $matches, PREG_SET_ORDER);
-
-        if ($result === false) {
-            throw new RegexException('Failure to match tokens');
-        }
-
+        $matches = Regex::matchAllSetOrder($pattern, $this->input);
         foreach ($matches as $match) {
             // Trim the junk from the match array.
             $result = array_filter(
@@ -107,7 +103,7 @@ class Lexer
             } elseif (isset($result['twoOrMore'])) {
                 $type = 'twoOrMore';
             } else {
-                throw new RegexException('Unrecognized token type: ' . json_encode($result));
+                throw new ValueException('Unrecognized token type: ' . json_encode($result));
             }
 
             $value = $result[$type];

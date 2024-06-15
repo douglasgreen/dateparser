@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DouglasGreen\DateParser;
 
-use DouglasGreen\Exceptions\ParseException;
+use DouglasGreen\Utility\Process\ParseException;
 
 class Parser
 {

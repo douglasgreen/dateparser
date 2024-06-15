@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DouglasGreen\DateParser;
 
-use DouglasGreen\Exceptions\ValueException;
+use DouglasGreen\Utility\Data\ValueException;
 
 /**
  * @todo check rand range and case numbers
