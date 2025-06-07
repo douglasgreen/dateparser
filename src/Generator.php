@@ -11,10 +11,6 @@ use DouglasGreen\Utility\Data\ValueException;
  * @todo check that all functions and symbols are used
  * @todo develop logic of filling in missing parts of dates, like 'always on 1st'
  */
-
-/**
- * @SuppressWarnings(PHPMD.TooManyPublicMethods)
- */
 class Generator
 {
     /**

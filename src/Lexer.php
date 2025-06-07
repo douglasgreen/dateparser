@@ -16,9 +16,6 @@ class Lexer
 
     protected int $position = 0;
 
-    /**
-     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
-     */
     public function __construct(
         protected string $input,
         protected bool $isVerbose = false
