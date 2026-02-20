@@ -42,3 +42,4 @@ __pycache__/
 # Symfony
 /.env.local.php
 /var/
+.aider*
