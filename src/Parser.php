@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DouglasGreen\DateParser;
 
-use DouglasGreen\Utility\Logic\ParseException;
+use RuntimeException;
 
 class Parser
 {
@@ -29,27 +29,27 @@ class Parser
 
     /**
      * @param list<string> $value
-     * @throws ParseException
+     * @throws RuntimeException
      */
     protected function eat(string $tokenType, string|array $value = null): void
     {
         if (! $this->currentToken instanceof Token) {
-            throw new ParseException('Out of tokens');
+            throw new RuntimeException('Out of tokens');
         }
 
         if ($this->currentToken->type !== $tokenType) {
-            throw new ParseException('Unexpected token type: ' . json_encode($this->currentToken));
+            throw new RuntimeException('Unexpected token type: ' . json_encode($this->currentToken));
         }
 
         if ($value !== null) {
             if (is_string($value) && $this->currentToken->value !== $value) {
-                throw new ParseException(
+                throw new RuntimeException(
                     'Unexpected token literal: ' . json_encode($this->currentToken),
                 );
             }
 
             if (is_array($value) && ! in_array($this->currentToken->value, $value, true)) {
-                throw new ParseException(
+                throw new RuntimeException(
                     'Unexpected token value: ' . json_encode($this->currentToken),
                 );
             }
@@ -68,7 +68,7 @@ class Parser
     }
 
     /**
-     * @throws ParseException
+     * @throws RuntimeException
      */
     protected function parseDateExpression(): DateExpression
     {
@@ -84,7 +84,7 @@ class Parser
             return $this->parseRecurringDate();
         }
 
-        throw new ParseException(
+        throw new RuntimeException(
             'Unexpected token in date expression: ' . json_encode($this->currentToken),
         );
     }
@@ -123,7 +123,7 @@ class Parser
     }
 
     /**
-     * @throws ParseException
+     * @throws RuntimeException
      */
     protected function parseSimpleDate(): SimpleDate
     {
@@ -134,7 +134,7 @@ class Parser
         }
 
         // Additional rules for simple dates (e.g., "13th", "Jan 13")
-        throw new ParseException(
+        throw new RuntimeException(
             'Unexpected token in simple date: ' . json_encode($this->currentToken),
         );
     }

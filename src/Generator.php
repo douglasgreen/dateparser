@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DouglasGreen\DateParser;
 
-use DouglasGreen\Utility\Data\ValueException;
+use InvalidArgumentException;
 
 /**
  * @todo check rand range and case numbers
@@ -1060,7 +1060,7 @@ class Generator
     }
 
     /**
-     * @throws ValueException
+     * @throws InvalidArgumentException
      */
     protected function getDaysInMonth(int|string $month): int
     {
@@ -1104,7 +1104,7 @@ class Generator
             case 'Nov':
                 return 30;
             default:
-                throw new ValueException('Unknown month: ' . $month);
+                throw new InvalidArgumentException('Unknown month: ' . $month);
         }
     }
 }
